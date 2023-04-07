@@ -1,0 +1,435 @@
+<!doctype html>
+{% load static %}
+<meta charset="utf-8" xmlns="http://www.w3.org/1999/html"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+        <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/jquery"></script>
+        <script type="text/javascript" src="{% static "/assets/js/material-dashboard.js" %}"></script>
+<!-- Material Icons -->
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <!-- CSS Files -->
+  <link href="/static/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+        <link id="pagestyle" href="https://demos.creative-tim.com/material-kit/assets/css/material-kit.min.css?v=3.0.0" rel="stylesheet" />
+        <link id="pagestyle" href="https://appsrv1-147a1.kxcdn.com/material-kit2-pro-django-v1.0.4/css/material-kit-pro.css?v=3.0.0" rel="stylesheet">
+	<body>
+        <section class="py-7 bg-cover position-relative" style="background-image: url(&#39;https://appsrv1-147a1.kxcdn.com/material-kit2-pro-django-v1.0.4/img/city-profile.jpg&#39;);">
+  <div class="mask bg-gradient-dark"></div>
+  <div class="container position-relative z-index-2">
+    <div class="col">
+{#      <div class="col-lg-5 my-auto">#}
+{#        <h2 class="text-white">摘要系统</h2>#}
+{##}
+{##}
+{#      </div>#}
+      <div class="col-lg-12 m-auto">
+        <div class="card card-contact card-raised" >
+          <form id="contact-form1" >
+              {% csrf_token %}
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+              <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
+                <h5 class="text-center text-white">摘要生成系统</h5>
+              </div>
+            </div>
+            <div class="card-body">
+{#              <div class="row">#}
+{#                <div class="col-3 mx-auto">#}
+{#                  <select class="form-control" name="cid" id="cid" onchange="selectcity1()">#}
+{#                      <option>请选择</option>#}
+{#                      <option>{{ city.pop }}</option>#}
+{#                      <option>{{ city.pop }}</option>#}
+{#                      <option>{{ city.pop }}</option>#}
+{#                      <option>{{ city.pop }}</option>#}
+{#                  </select>#}
+{#                </div>#}
+{#                <div class="col-3 mx-auto">#}
+{#                  <select class="form-control" name="did" id="did" onchange="selectcity2()">#}
+{#                      <option>请选择</option>#}
+{#                  </select>#}
+{#                </div>#}
+{#              </div>#}
+{#              <div class="input-group input-group-dynamic mb-4">#}
+{#                <select class="form-control" name="mid" id="mid">#}
+{#                    <option>请选择</option>#}
+{#                </select>#}
+{#              </div>#}
+              <div class="row">
+                  <div class="col-md-6">
+                      <div class="input-group input-group-static mb-4">
+                <label>输入要抽取摘要的留言</label>
+                <textarea name="msg1" style="resize: none" class="form-control" id="msg1" rows="6"></textarea>
+              </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="p-3 d-flex">
+
+          <div class="ms-5">
+            <h5 class="text-dark">留言摘要</h5>
+            <span class="text-dark" id="summary">
+            </span>
+          </div>
+        </div>
+                  </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 text-center m-auto">
+                  <button type="button" onclick="sum()" class="btn bg-gradient-primary mb-0">抽取</button>
+                    <button type="button" onclick="abssum()" class="btn bg-gradient-primary mb-0">生成</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+        <section class="pt-5 mt-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header card-header-tabs card-header-rose">
+                <h5 class="text-center text-white">数据表格</h5>
+                <div class="row" style="display: inline-block">
+                    <input id="query" placeholder="请输入要检索的关键词"><button type="button" class="btn btn-danger btn-block" onclick="query()">检索</button>
+
+                </div>
+
+            </div>
+          <div class="table-responsive">
+            <table class="table align-items-center mb-0">
+              <thead>
+                <tr>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">区域/留言标题</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">类型/领域</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">状态</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">留言时间</th>
+                  <th class="text-secondary opacity-7">摘要</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for record in Page %}
+                <tr>
+                  <td>
+                    <div class="d-flex px-2 py-1">
+                      <div class="d-flex flex-column justify-content-center">
+                        <h6 class="mb-0 text-xs">{{ record.object }}</h6>
+                        <p class="text-xs text-secondary mb-0">{{ record.title }}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <p class="text-xs font-weight-bold mb-0">{{ record.type }}</p>
+                    <p class="text-xs text-secondary mb-0">{{ record.domain }}</p>
+                  </td>
+                  <td class="align-middle text-center text-sm">
+                      {% if record.state == '已办理' %}
+                    <span class="badge badge-sm badge-success">{{ record.state }}</span>
+                      {% elif record.state == '办理中' %}
+                      <span class="badge badge-sm badge-warning">{{ record.state }}</span>
+                      {% else %}
+                      <span class="badge badge-sm badge-secondary">{{ record.state }}</span>
+                      {% endif %}
+                  </td>
+                  <td class="align-middle text-center">
+                    <span class="text-secondary text-xs font-weight-bold">{{ record.msgtime }}</span>
+                  </td>
+                  <td class="align-middle">
+                       <button class="btn btn-rose btn-block-" onclick="tabsum('{{ record.msgcontent }}')">抽取</button>
+                  </td>
+                <td class="align-middle">
+                       <button class="btn btn-warning btn-block" onclick="tababssum('{{ record.msgcontent }}')">生成</button>
+                  </td>
+                <td class="align-middle">
+                       <button class="btn btn-danger btn-block" onclick="tababssum('{{ record.msgcontent }}。{{ record.rplcontent }}')">多文档生成</button>
+                  </td>
+                <td class="align-middle">
+                       <button class="btn btn-danger btn-block" onclick="tabsum('{{ record.msgcontent }}。{{ record.rplcontent }}')">多文档抽取</button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+          </div>
+<div class="row justify-space-between py-2">
+            <div class="col-lg-8 mx-auto">
+            <ul class="pagination pagination-primary m-4">
+            <li class="page-item">
+                {% if Page.has_previous %}
+                    <a class="page-link" href="?page={{ Page.previous_page_number }}&query={{ query }}" aria-label="Previous">
+                        <span aria-hidden="true"><i class="material-icons" aria-hidden="true">chevron_left</i></span>
+                    </a>
+                {% endif %}
+            </li>
+            <li>
+                {% if ifEllipsis == 1 %}
+                    {% if Page.number >= 1 and Page.number <= 10 %}
+                        {% for i in range1 %}
+                            {% if i >= 1 and i <= 10 %}
+                                <li {% if Page.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ i }}&query={{ query }}">{{ i }}</a>
+                                </li>
+                            {% elif i == 12 %}
+                                <li {% if Page.number == Page.paginator.num_pages %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ Page.paginator.num_pages }}&query={{ query }}">{{ Page.paginator.num_pages }}</a>
+                                </li>
+                            {% elif i == 11 %}
+                                <li class="page-item">
+                                    <a class="page-link">...</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif Page.number == Page.paginator.num_pages %}
+                        {% for i in range1 %}
+                            {% if i >= 1 and i <= 10 %}
+                                <li {% if Page.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ i }}&query={{ query }}">{{ i }}</a>
+                                </li>
+                            {% elif i == 12 %}
+                                <li {% if Page.number == Page.paginator.num_pages %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ Page.paginator.num_pages }}&query={{ query }}">{{ Page.paginator.num_pages }}</a>
+                                </li>
+                            {% elif i == 11 %}
+                                <li class="page-item">
+                                    <a class="page-link">...</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif Page.number == 11 %}
+                        {% for i in range3 %}
+                            {% if i >= 1 and i <= 10 %}
+                                <li {% if Page.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ i }}&query={{ query }}">{{ i }}</a>
+                                </li>
+                            {% elif i == 13 %}
+                                <li {% if Page.number == Page.paginator.num_pages %} class="page-item active" {% else %} class="page-item"{% endif %}>
+                                    <a class="page-link" href="?page={{ Page.paginator.num_pages }}&query={{ query }}">{{ Page.paginator.num_pages }}</a>
+                                </li>
+                            {% elif i == 11 %}
+                                <li {% if Page.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ i }}&query={{ query }}">{{ i }}</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item">
+                                    <a class="page-link">...</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif Page.number == lastButOne  %}
+                        {% for i in range3 %}
+                            {% if i >= 1 and i <= 10 %}
+                                <li {% if Page.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ i }}&query={{ query }}">{{ i }}</a>
+                                </li>
+                            {% elif i == 13 %}
+                                <li {% if Page.number == Page.paginator.num_pages %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ Page.paginator.num_pages }}&query={{ query }}">{{ Page.paginator.num_pages }}</a>
+                                </li>
+                            {% elif i == 12 %}
+                                <li {% if Page.number == lastButOne %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ lastButOne }}&query={{ query }}">{{ lastButOne }}</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item">
+                                    <a class="page-link">...</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif Page.number > 11 and Page.number < lastButOne %}
+                        {% for i in range2 %}
+                            {% if i >= 1 and i <= 10 %}
+                                <li {% if Page.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ i }}&query={{ query }}">{{ i }}</a>
+                                </li>
+                            {% elif i == 11 %}
+                                <li class="page-item">
+                                    <a class="page-link">...</a>
+                                </li>
+                            {% elif i == 12 %}
+                                <li class="page-item active">
+                                    <a class="page-link" href="?page={{ Page.number }}&query={{ query }}">{{ Page.number }}</a>
+                                </li>
+                            {% elif i == 13 %}
+                                <li class="page-item">
+                                    <a class="page-link">...</a>
+                                </li>
+                            {% elif i == 14 %}
+                                <li {% if Page.number == Page.paginator.num_pages %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ Page.paginator.num_pages }}&query={{ query }}">{{ Page.paginator.num_pages }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% elif ifEllipsis == 0 %}
+                    {% for i in Page.paginator.page_range %}
+                        <li {% if Page.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                            <a class="page-link" href="?page={{ i }}&query={{ query }}">{{ i }}</a>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+            </li>
+            <li class="page-item">
+                {% if Page.has_next %}
+                    <a class="page-link" href="?page={{ Page.next_page_number }}&query={{ query }}" aria-label="Next">
+                        <span aria-hidden="true"><i class="material-icons" aria-hidden="true">chevron_right</i></span>
+                    </a>
+                {% endif %}
+            </li>
+            <a class="text">共{{ Page.paginator.num_pages }}页</a>
+            <li class="input-group">
+                <a>
+                    跳转至<textarea class="input-group" style="resize:none" id="pageNum" size="1"></textarea>页
+                </a>
+            </li>
+            </ul>
+        </div>
+        <ul class="col-lg-4 mx-auto">
+{#            <li style="display: inline">#}
+{#                跳转至<input type="text" id="pageNum" size="1">页#}
+{#            </li>#}
+            <li style="display:inline" class="page-item">
+                <a class="page-link" onclick="getPage();">
+                    <span aria-label="true"><i class="material-icons" aria-hidden="true">reply</i></span>
+                </a>
+            </li>
+        </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+    </div>
+  </div>
+</section>
+
+        <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/jquery"></script>
+        <script type="text/javascript" src="{% static "/assets/js/plugins/bootstrap-notify.js" %}"></script>
+        <script type="text/javascript" src="{% static "/assets/js/material-dashboard.js" %}"></script>
+        <script type="text/javascript">
+        function sum(){
+            $.ajax({
+                type: "POST",
+                url: '/test/',
+                data:{
+                    text:$('#msg1').val(),
+                    csrfmiddlewaretoken:$('[name="csrfmiddlewaretoken"]').val()
+                },
+                success: function (data) {
+                    $('#summary').text(data.sum)
+                }
+            })
+        }
+        function abssum(){
+            $.ajax({
+                type: "POST",
+                url: '/abssum/',
+                data:{
+                    text:$('#msg1').val(),
+                    csrfmiddlewaretoken:$('[name="csrfmiddlewaretoken"]').val()
+                },
+                success: function (data) {
+                    $('#summary').text(data.sum)
+                }
+            })
+        }
+        var json_data1={}
+        function selectcity1(){
+            $.ajaxSetup({async :false});
+            $.ajax({
+                type: "GET",
+                url: '/get_obj/',
+                success: function (data) {
+                    json_data1 = JSON.parse(data)
+                }
+            })
+
+            var district=json_data1['district'];
+            var index1=document.getElementById("cid").selectedIndex;
+            var option1=document.getElementById("did");
+            option1.options.length=1;
+            for(var x=0;x<district[index1-1].length;x++){
+                var opt=document.createElement("option");
+                opt.innerHTML=district[index1-1][x];
+                option1.appendChild(opt);
+            }
+        }
+        function selectcity2(){
+            var district=json_data1['district'];
+            {#var district={{ data }}['object'];#}
+            $.ajaxSetup({async :false});
+            $.ajax({
+                type: "GET",
+                url: '/get_msg/',
+                success: function (data) {
+                    json_data2 = JSON.parse(data)
+                    console.log(json_data2)
+                }
+            })
+
+            var msg=json_data2['msgs'];
+            console.log(json_data2)
+            var index1=document.getElementById("cid").selectedIndex;
+            var index2=document.getElementById("did").selectedIndex;
+            var option2=document.getElementById("mid");
+            option2.options.length=1;
+            for(var y=0;y<district[index1-1].length;y++){
+                for(var x=0;x<50;x++){
+                    var opt=document.createElement("option");
+                    opt.innerHTML=msg[index1-1][index2-1][x];
+                    option2.appendChild(opt);
+            }
+            }
+
+        }
+        function tabsum(text){
+            $.ajax({
+                type: "GET",
+                url: '/get_sum/',
+                data:{'text':text},
+                success: function (data) {
+                    console.log(data)
+                    sum=data
+                }
+            })
+            md.showNotification('top','center',sum);
+        }
+        function tababssum(text){
+            $.ajax({
+                type: "GET",
+                url: '/get_abs/',
+                data:{'text':text},
+                success: function (data) {
+                    console.log(data)
+                    sum=data
+                }
+            })
+            md.showNotification('top','center',sum);
+        }
+        function getPage(){
+            var pageNum = $('#pageNum').val();
+            if(pageNum>=1&&pageNum<={{ Page.paginator.num_pages }}){
+                location.assign("{% url 'ts' %}?page="+pageNum+"&query={{ query }}")
+            }
+            else{
+                alert('请输入正确的页码')
+            }
+        }
+
+        function query(){
+            queryt=$('#query').val();
+            if(queryt!==''){
+                location.assign("{% url 'ts' %}?query="+queryt)
+            }
+            else {
+                alert('输入关键词为空！')
+            }
+
+        }
+    </script>
+
+	</body>
+</html>

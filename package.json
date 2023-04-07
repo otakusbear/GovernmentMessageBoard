@@ -1,0 +1,27 @@
+{
+    "name": "material-dashboard-django",
+    "mastertemplate": "boilerplate-code-django-dashboard",
+    "version": "1.0.2",
+    "description": "Template project - Django Boilerplate Code ",
+    "scripts": {},
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/creativetimofficial/material-dashboard-django"
+    },
+    "bugs": {
+        "url": "https://github.com/creativetimofficial/material-dashboard-django/issues",
+        "email": "support@appseed.us"
+    },
+    "author": "Creative-Tim / AppSeed.us",
+    "engines": {
+        "node": ">=10.0.0"
+    },
+    "dependencies": {
+        "@emotion/react": "^11.10.6",
+        "@emotion/styled": "^11.10.6",
+        "@mui/icons-material": "^5.11.11",
+        "@mui/material": "^5.11.15",
+        "@mui/styled-engine-sc": "^5.11.11",
+        "styled-components": "^5.3.9"
+    }
+}
