@@ -23,7 +23,6 @@ $.ajax({
   success:function (data){
     all_data=JSON.parse(data)
     console.log(all_data)
-
   }
 });
 var md = {
@@ -44,7 +43,6 @@ var md = {
   },
 
   showNotification: function(from, align, msg) {
-    console.log(msg)
     type = ['', 'info', 'danger', 'success', 'warning', 'rose', 'primary','light'];
 
     color = Math.floor((Math.random() * 7) + 1);
@@ -306,6 +304,7 @@ var md = {
         ]
       };
       dataWebsiteViewsChart.series.push(getData(dataWebsiteViewsChart.labels))
+      dataWebsiteViewsChart.series.push(getRplbyDom(dataWebsiteViewsChart.labels))
       var optionsWebsiteViewsChart = {
 
         axisX: {
@@ -324,6 +323,58 @@ var md = {
           left: 0
         }
       };
+      dataRplNumBarChart = {
+        labels: ['城建', '环保', '交通', '教育', '金融', '就业', '旅游', '企业', '三农', '体育', '文娱', '医疗','政务','治安',],
+        series: [
+
+
+        ]
+      };
+      dataRplNumBarChart.series.push(getRplbyDom(dataRplNumBarChart.labels))
+      var optionsRplNumBarChart = {
+
+        axisX: {
+          offset:50,
+          showGrid: false
+        },
+        axisY:{
+          offset: 45
+        },
+        low: 0,
+        high: getMaxValue(dataRplNumBarChart.series[0]).value,
+        chartPadding: {
+          top: 0,
+          right: 5,
+          bottom: 0,
+          left: 0
+        }
+      };
+      dataTimeMeanBarChart = {
+        labels: ['城建', '环保', '交通', '教育', '金融', '就业', '旅游', '企业', '三农', '体育', '文娱', '医疗','政务','治安',],
+        series: [
+
+
+        ]
+      };
+      dataTimeMeanBarChart.series.push(getMeanbyDom(dataRplNumBarChart.labels))
+      var optionsTimeMeanBarChart = {
+
+        axisX: {
+          offset:50,
+          showGrid: false
+        },
+        axisY:{
+          offset: 45
+        },
+        low: 0,
+        high: getMaxValue(dataTimeMeanBarChart.series[0]).value,
+        chartPadding: {
+          top: 0,
+          right: 5,
+          bottom: 0,
+          left: 0
+        }
+      };
       var responsiveOptions = [
         ['screen and (max-width: 640px)', {
           seriesBarDistance: 5,
@@ -335,9 +386,12 @@ var md = {
         }]
       ];
       var websiteViewsChart = Chartist.Bar('#websiteViewsChart', dataWebsiteViewsChart, optionsWebsiteViewsChart, responsiveOptions);
-
+      var rplNumBarChart = new Chartist.Bar('#rplNumBarChart', dataRplNumBarChart, optionsRplNumBarChart);
+      var timeMeanBarChart = new Chartist.Bar('#timeMeanBarChart', dataTimeMeanBarChart, optionsTimeMeanBarChart);
       //start animation for the Emails Subscription Chart
       md.startAnimationForBarChart(websiteViewsChart);
+      md.startAnimationForBarChart(rplNumBarChart);
+      md.startAnimationForBarChart(timeMeanBarChart);
     }
   },
 
@@ -647,44 +701,96 @@ var md = {
     });
   }
 }
-var filter_data=all_data
-var rpl_data=filter_data.filter(function (e){return e.state==='已办理';})
-document.getElementById("t1").innerHTML = filter_data.sort(sortTime)[0].title;
-document.getElementById("t2").innerHTML = filter_data.sort(sortTime)[1].title;
-document.getElementById("t3").innerHTML = filter_data.sort(sortTime)[2].title;
-document.getElementById("t4").innerHTML = filter_data.sort(sortTime)[3].title;
-document.getElementById("ty1").innerHTML = filter_data.sort(sortTime)[0].type;
-document.getElementById("ty2").innerHTML = filter_data.sort(sortTime)[1].type;
-document.getElementById("ty3").innerHTML = filter_data.sort(sortTime)[2].type;
-document.getElementById("ty4").innerHTML = filter_data.sort(sortTime)[3].type;
-document.getElementById("s1").innerHTML = filter_data.sort(sortTime)[0].state;
-document.getElementById("s2").innerHTML = filter_data.sort(sortTime)[1].state;
-document.getElementById("s3").innerHTML = filter_data.sort(sortTime)[2].state;
-document.getElementById("s4").innerHTML = filter_data.sort(sortTime)[3].state;
-document.getElementById("d1").innerHTML = filter_data.sort(sortTime)[0].domain;
-document.getElementById("d2").innerHTML = filter_data.sort(sortTime)[1].domain;
-document.getElementById("d3").innerHTML = filter_data.sort(sortTime)[2].domain;
-document.getElementById("d4").innerHTML = filter_data.sort(sortTime)[3].domain;
-document.getElementById("ti1").innerHTML = filter_data.sort(sortTime)[0].object;
-document.getElementById("ti2").innerHTML = filter_data.sort(sortTime)[1].object;
-document.getElementById("ti3").innerHTML = filter_data.sort(sortTime)[2].object;
-document.getElementById("ti4").innerHTML = filter_data.sort(sortTime)[3].object;
-document.getElementById("c1").innerHTML = rpl_data.sort(sortTime)[0].rplcontent;
-document.getElementById("c2").innerHTML = rpl_data.sort(sortTime)[1].rplcontent;
-document.getElementById("c3").innerHTML = rpl_data.sort(sortTime)[2].rplcontent;
-document.getElementById("c4").innerHTML = rpl_data.sort(sortTime)[3].rplcontent;
-document.getElementById("o1").innerHTML = rpl_data.sort(sortTime)[0].rplorg;
-document.getElementById("o2").innerHTML = rpl_data.sort(sortTime)[1].rplorg;
-document.getElementById("o3").innerHTML = rpl_data.sort(sortTime)[2].rplorg;
-document.getElementById("o4").innerHTML = rpl_data.sort(sortTime)[3].rplorg;
-document.getElementById("a1").innerHTML = rpl_data.sort(sortTime)[0].rpl_atts;
-document.getElementById("a2").innerHTML = rpl_data.sort(sortTime)[1].rpl_atts;
-document.getElementById("a3").innerHTML = rpl_data.sort(sortTime)[2].rpl_atts;
-document.getElementById("a4").innerHTML = rpl_data.sort(sortTime)[3].rpl_atts;
-document.getElementById("rti1").innerHTML = rpl_data.sort(sortTime)[0].object;
-document.getElementById("rti2").innerHTML = rpl_data.sort(sortTime)[1].object;
-document.getElementById("rti3").innerHTML = rpl_data.sort(sortTime)[2].object;
-document.getElementById("rti4").innerHTML = rpl_data.sort(sortTime)[3].object;
+// let local
+// fetch('/static/assets/js/data.json')
+//   .then((response) => response.json())
+//   .then((json) => {
+//     local = JSON.parse(json);
+//     // 在这里定义你希望在获取数据后执行的函数
+//     myFunction(local);
+//   });
+// function myFunction(data) {
+//   // 在这里使用获取到的数据
+//   console.log(data)
+// }
+
+var filter_data=all_data.sort(sortTime)
+var rpl_data=filter_data.filter(function (e){return e.state==='已办理';}).sort(sortrplTime)
+for(i=0;i<10;i++){
+  document.getElementById("title"+i.toString()).innerHTML = filter_data[i].title;
+  document.getElementById("title"+i.toString()).setAttribute('title',filter_data[i].msgcontent);
+  document.getElementById("title"+i.toString()).addEventListener('click',(function (index) {
+    return function () {
+      md.showNotification('top','center',filter_data[index].msgcontent);
+      alert(filter_data[index].msgcontent);
+    };
+  })(i));
+  document.getElementById("title0"+i.toString()).innerHTML = rpl_data[i].title;
+  document.getElementById("title0"+i.toString()).setAttribute('title',rpl_data[i].msgcontent);
+  document.getElementById("title0"+i.toString()).addEventListener('click',(function (index) {
+    return function () {
+      md.showNotification('top','center',rpl_data[index].msgcontent);
+      alert(rpl_data[index].msgcontent);
+    };
+  })(i));
+  document.getElementById("type"+i.toString()).innerHTML = filter_data[i].type;
+  document.getElementById("type"+i.toString()).setAttribute('title',filter_data[i].type);
+  document.getElementById("domain"+i.toString()).innerHTML = filter_data[i].domain;
+  document.getElementById("domain"+i.toString()).setAttribute('title',filter_data[i].domain);
+  document.getElementById("state"+i.toString()).innerHTML = filter_data[i].state;
+  document.getElementById("state"+i.toString()).setAttribute('title',filter_data[i].state);
+  switch (filter_data[i].state){
+    case '已办理':
+      document.getElementById("state"+i.toString()).setAttribute('class','badge badge-md badge-success');
+      break;
+    case '办理中':
+      document.getElementById("state"+i.toString()).setAttribute('class','badge badge-md badge-warning');
+      break;
+    case '待回复':
+      document.getElementById("state"+i.toString()).setAttribute('class','badge badge-md badge-secondary');
+      break;
+  }
+  document.getElementById("object"+i.toString()).innerHTML = filter_data[i].object;
+  document.getElementById("object"+i.toString()).setAttribute('title',filter_data[i].object);
+  document.getElementById("senti"+i.toString()).innerHTML = filter_data[i].senti;
+  document.getElementById("senti"+i.toString()).setAttribute('title',filter_data[i].senti);
+  switch (filter_data[i].senti){
+    case '正':
+      document.getElementById("senti"+i.toString()).setAttribute('class','badge badge-sm badge-success');
+      break;
+    case '中':
+      document.getElementById("senti"+i.toString()).setAttribute('class','badge badge-sm badge-warning');
+      break;
+    case '负':
+      document.getElementById("senti"+i.toString()).setAttribute('class','badge badge-sm badge-danger');
+      break;
+  }
+  document.getElementById("msgmod"+i.toString()).innerHTML = filter_data[i].msg_mods;
+  document.getElementById("msgmod"+i.toString()).setAttribute('title',filter_data[i].msg_mods);
+  document.getElementById("msgtime"+i.toString()).innerHTML =new Date(filter_data[i].msgtime).toLocaleDateString('zh-CN',{year: 'numeric', month: 'long', day: 'numeric'})+new Date(filter_data[i].msgtime).toLocaleTimeString('zh-CN');
+  document.getElementById("msgtime"+i.toString()).setAttribute('title',new Date(filter_data[i].msgtime).toLocaleDateString('zh-CN',{year: 'numeric', month: 'long', day: 'numeric'})+new Date(filter_data[i].msgtime).toLocaleTimeString('zh-CN'));
+  document.getElementById("rplcontent"+i.toString()).innerHTML = rpl_data[i].rplcontent;
+  document.getElementById("rplcontent"+i.toString()).setAttribute('title',rpl_data[i].rplcontent);
+  document.getElementById("rplorg"+i.toString()).innerHTML = rpl_data[i].rplorg;
+  document.getElementById("rplorg"+i.toString()).setAttribute('title',rpl_data[i].rplorg);
+  document.getElementById("rpl_mods"+i.toString()).innerHTML = rpl_data[i].rpl_mods;
+  document.getElementById("rpl_mods"+i.toString()).setAttribute('title',rpl_data[i].rpl_mods);
+  switch (rpl_data[i].rpl_mods){
+    case '共情话语':
+      document.getElementById("rpl_mods"+i.toString()).setAttribute('class','badge badge-sm badge-danger');
+      break;
+    case '描述话语':
+      document.getElementById("rpl_mods"+i.toString()).setAttribute('class','badge badge-sm badge-warning');
+      break;
+    case '规则话语':
+      document.getElementById("rpl_mods"+i.toString()).setAttribute('class','badge badge-sm badge-info');
+      break;
+  }
+  document.getElementById("rpl_atts"+i.toString()).innerHTML = rpl_data[i].rpl_atts;
+  document.getElementById("rpl_atts"+i.toString()).setAttribute('title',rpl_data[i].rpl_atts);
+  document.getElementById("rpltime"+i.toString()).innerHTML =new Date(rpl_data[i].rpltime).toLocaleDateString('zh-CN',{year: 'numeric', month: 'long', day: 'numeric'})+new Date(rpl_data[i].rpltime).toLocaleTimeString('zh-CN');
+  document.getElementById("rpltime"+i.toString()).setAttribute('title',new Date(rpl_data[i].rpltime).toLocaleDateString('zh-CN',{year: 'numeric', month: 'long', day: 'numeric'})+new Date(rpl_data[i].rpltime).toLocaleTimeString('zh-CN'));
+}
 function numInit() {
     $('.text-success').each(function(){
       $(this).prop('Counter',0).animate({
@@ -739,7 +845,6 @@ function getDatabyMon(list){
   for (i=0;i<list.length;i++){
     datalist[i]=filter_data.filter(function (e){return e.msg_month===parseInt(list[i]);}).length
   }
-  console.log(datalist)
   return datalist
 }
 function getRplbyMon(list){
@@ -769,6 +874,25 @@ function getData(list){
   }
   return datalist
 }
+function getRplbyDom(list){
+  datalist=[]
+  for (i=0;i<list.length;i++){
+    datalist[i]=rpl_data.filter(function (e){return e.domain===list[i];}).length
+  }
+  return datalist
+}
+function getMeanbyDom(list){
+  datalist=[]
+  for (i=0;i<list.length;i++){
+    sum=0;
+    mon_data=rpl_data.filter(function (e){return e.domain===list[i];});
+    for (j=0;j<mon_data.length;j++){
+      sum+=parseInt(mon_data[j].rpltimedif,10);
+    }
+    datalist[i]=sum/mon_data.length;
+  }
+  return datalist
+}
 function getMaxValue(list){
   var Max=0;
   for (i=0;i<list.length;i++){
@@ -795,8 +919,10 @@ function getMaxValue(list){
 function sortTime(a,b){
     return b.msgtime-a.msgtime;
 }
+function sortrplTime(a,b){
+    return b.rpltime-a.rpltime;
+}
 
-console.log(filter_data.sort(sortTime)[0]['msgcontent']);
 var breakCards = true;
 
 var searchVisible = 0;
@@ -940,42 +1066,104 @@ function debounce(func, wait, immediate) {
 function changeObj(mark){
   filter_data=all_data.filter(function (e){return e.object===mark;})
   rpl_data=filter_data.filter(function (e){return e.state==='已办理';})
-  document.getElementById("t1").innerHTML = filter_data.sort(sortTime)[0].title;
-document.getElementById("t2").innerHTML = filter_data.sort(sortTime)[1].title;
-document.getElementById("t3").innerHTML = filter_data.sort(sortTime)[2].title;
-document.getElementById("t4").innerHTML = filter_data.sort(sortTime)[3].title;
-document.getElementById("ty1").innerHTML = filter_data.sort(sortTime)[0].type;
-document.getElementById("ty2").innerHTML = filter_data.sort(sortTime)[1].type;
-document.getElementById("ty3").innerHTML = filter_data.sort(sortTime)[2].type;
-document.getElementById("ty4").innerHTML = filter_data.sort(sortTime)[3].type;
-document.getElementById("s1").innerHTML = filter_data.sort(sortTime)[0].state;
-document.getElementById("s2").innerHTML = filter_data.sort(sortTime)[1].state;
-document.getElementById("s3").innerHTML = filter_data.sort(sortTime)[2].state;
-document.getElementById("s4").innerHTML = filter_data.sort(sortTime)[3].state;
-document.getElementById("d1").innerHTML = filter_data.sort(sortTime)[0].domain;
-document.getElementById("d2").innerHTML = filter_data.sort(sortTime)[1].domain;
-document.getElementById("d3").innerHTML = filter_data.sort(sortTime)[2].domain;
-document.getElementById("d4").innerHTML = filter_data.sort(sortTime)[3].domain;
-document.getElementById("ti1").innerHTML = filter_data.sort(sortTime)[0].object;
-document.getElementById("ti2").innerHTML = filter_data.sort(sortTime)[1].object;
-document.getElementById("ti3").innerHTML = filter_data.sort(sortTime)[2].object;
-document.getElementById("ti4").innerHTML = filter_data.sort(sortTime)[3].object;
-document.getElementById("c1").innerHTML = rpl_data.sort(sortTime)[0].rplcontent;
-document.getElementById("c2").innerHTML = rpl_data.sort(sortTime)[1].rplcontent;
-document.getElementById("c3").innerHTML = rpl_data.sort(sortTime)[2].rplcontent;
-document.getElementById("c4").innerHTML = rpl_data.sort(sortTime)[3].rplcontent;
-document.getElementById("o1").innerHTML = rpl_data.sort(sortTime)[0].rplorg;
-document.getElementById("o2").innerHTML = rpl_data.sort(sortTime)[1].rplorg;
-document.getElementById("o3").innerHTML = rpl_data.sort(sortTime)[2].rplorg;
-document.getElementById("o4").innerHTML = rpl_data.sort(sortTime)[3].rplorg;
-document.getElementById("a1").innerHTML = rpl_data.sort(sortTime)[0].rpl_atts;
-document.getElementById("a2").innerHTML = rpl_data.sort(sortTime)[1].rpl_atts;
-document.getElementById("a3").innerHTML = rpl_data.sort(sortTime)[2].rpl_atts;
-document.getElementById("a4").innerHTML = rpl_data.sort(sortTime)[3].rpl_atts;
-document.getElementById("rti1").innerHTML = rpl_data.sort(sortTime)[0].object;
-document.getElementById("rti2").innerHTML = rpl_data.sort(sortTime)[1].object;
-document.getElementById("rti3").innerHTML = rpl_data.sort(sortTime)[2].object;
-document.getElementById("rti4").innerHTML = rpl_data.sort(sortTime)[3].object;
+  for(i=0;i<10;i++){
+    document.getElementById("title"+i.toString()).innerHTML = filter_data[i].title;
+  document.getElementById("title"+i.toString()).setAttribute('title',filter_data[i].msgcontent);
+  document.getElementById("title0"+i.toString()).innerHTML = rpl_data[i].title;
+  document.getElementById("title0"+i.toString()).setAttribute('title',rpl_data[i].msgcontent);
+  document.getElementById("type"+i.toString()).innerHTML = filter_data[i].type;
+  document.getElementById("type"+i.toString()).setAttribute('title',filter_data[i].type);
+  document.getElementById("domain"+i.toString()).innerHTML = filter_data[i].domain;
+  document.getElementById("domain"+i.toString()).setAttribute('title',filter_data[i].domain);
+  document.getElementById("state"+i.toString()).innerHTML = filter_data[i].state;
+  document.getElementById("state"+i.toString()).setAttribute('title',filter_data[i].state);
+  switch (filter_data[i].state){
+    case '已办理':
+      document.getElementById("state"+i.toString()).setAttribute('class','badge badge-md badge-success');
+      break;
+    case '办理中':
+      document.getElementById("state"+i.toString()).setAttribute('class','badge badge-md badge-warning');
+      break;
+    case '待回复':
+      document.getElementById("state"+i.toString()).setAttribute('class','badge badge-md badge-secondary');
+      break;
+  }
+  document.getElementById("object"+i.toString()).innerHTML = filter_data[i].object;
+  document.getElementById("object"+i.toString()).setAttribute('title',filter_data[i].object);
+  document.getElementById("senti"+i.toString()).innerHTML = filter_data[i].senti;
+  document.getElementById("senti"+i.toString()).setAttribute('title',filter_data[i].senti);
+  switch (filter_data[i].senti){
+    case '正':
+      document.getElementById("senti"+i.toString()).setAttribute('class','badge badge-sm badge-success');
+      break;
+    case '中':
+      document.getElementById("senti"+i.toString()).setAttribute('class','badge badge-sm badge-warning');
+      break;
+    case '负':
+      document.getElementById("senti"+i.toString()).setAttribute('class','badge badge-sm badge-danger');
+      break;
+  }
+  document.getElementById("msgmod"+i.toString()).innerHTML = filter_data[i].msg_mods;
+  document.getElementById("msgmod"+i.toString()).setAttribute('title',filter_data[i].msg_mods);
+  document.getElementById("msgtime"+i.toString()).innerHTML =new Date(filter_data[i].msgtime).toLocaleDateString('zh-CN',{year: 'numeric', month: 'long', day: 'numeric'})+new Date(filter_data[i].msgtime).toLocaleTimeString('zh-CN');
+  document.getElementById("msgtime"+i.toString()).setAttribute('title',new Date(filter_data[i].msgtime).toLocaleDateString('zh-CN',{year: 'numeric', month: 'long', day: 'numeric'})+new Date(filter_data[i].msgtime).toLocaleTimeString('zh-CN'));
+  document.getElementById("rplcontent"+i.toString()).innerHTML = rpl_data[i].rplcontent;
+  document.getElementById("rplcontent"+i.toString()).setAttribute('title',rpl_data[i].rplcontent);
+  document.getElementById("rplorg"+i.toString()).innerHTML = rpl_data[i].rplorg;
+  document.getElementById("rplorg"+i.toString()).setAttribute('title',rpl_data[i].rplorg);
+  document.getElementById("rpl_mods"+i.toString()).innerHTML = rpl_data[i].rpl_mods;
+  document.getElementById("rpl_mods"+i.toString()).setAttribute('title',rpl_data[i].rpl_mods);
+  switch (rpl_data[i].rpl_mods){
+    case '共情话语':
+      document.getElementById("rpl_mods"+i.toString()).setAttribute('class','badge badge-sm badge-danger');
+      break;
+    case '描述话语':
+      document.getElementById("rpl_mods"+i.toString()).setAttribute('class','badge badge-sm badge-warning');
+      break;
+    case '规则话语':
+      document.getElementById("rpl_mods"+i.toString()).setAttribute('class','badge badge-sm badge-info');
+      break;
+  }
+  document.getElementById("rpl_atts"+i.toString()).innerHTML = rpl_data[i].rpl_atts;
+  document.getElementById("rpl_atts"+i.toString()).setAttribute('title',rpl_data[i].rpl_atts);
+  document.getElementById("rpltime"+i.toString()).innerHTML =new Date(rpl_data[i].rpltime).toLocaleDateString('zh-CN',{year: 'numeric', month: 'long', day: 'numeric'})+new Date(rpl_data[i].rpltime).toLocaleTimeString('zh-CN');
+  document.getElementById("rpltime"+i.toString()).setAttribute('title',new Date(rpl_data[i].rpltime).toLocaleDateString('zh-CN',{year: 'numeric', month: 'long', day: 'numeric'})+new Date(rpl_data[i].rpltime).toLocaleTimeString('zh-CN'));
+  }
+// document.getElementById("t2").innerHTML = filter_data[1].title;
+// document.getElementById("t3").innerHTML = filter_data[2].title;
+// document.getElementById("t4").innerHTML = filter_data[3].title;
+// document.getElementById("ty1").innerHTML = filter_data[0].type;
+// document.getElementById("ty2").innerHTML = filter_data[1].type;
+// document.getElementById("ty3").innerHTML = filter_data[2].type;
+// document.getElementById("ty4").innerHTML = filter_data[3].type;
+// document.getElementById("s1").innerHTML = filter_data[0].state;
+// document.getElementById("s2").innerHTML = filter_data[1].state;
+// document.getElementById("s3").innerHTML = filter_data[2].state;
+// document.getElementById("s4").innerHTML = filter_data[3].state;
+// document.getElementById("d1").innerHTML = filter_data[0].domain;
+// document.getElementById("d2").innerHTML = filter_data[1].domain;
+// document.getElementById("d3").innerHTML = filter_data[2].domain;
+// document.getElementById("d4").innerHTML = filter_data[3].domain;
+// document.getElementById("ti1").innerHTML = filter_data[0].object;
+// document.getElementById("ti2").innerHTML = filter_data[1].object;
+// document.getElementById("ti3").innerHTML = filter_data[2].object;
+// document.getElementById("ti4").innerHTML = filter_data[3].object;
+// document.getElementById("c1").innerHTML = rpl_data[0].rplcontent;
+// document.getElementById("c2").innerHTML = rpl_data[1].rplcontent;
+// document.getElementById("c3").innerHTML = rpl_data[2].rplcontent;
+// document.getElementById("c4").innerHTML = rpl_data[3].rplcontent;
+// document.getElementById("o1").innerHTML = rpl_data[0].rplorg;
+// document.getElementById("o2").innerHTML = rpl_data[1].rplorg;
+// document.getElementById("o3").innerHTML = rpl_data[2].rplorg;
+// document.getElementById("o4").innerHTML = rpl_data[3].rplorg;
+// document.getElementById("a1").innerHTML = rpl_data[0].rpl_atts;
+// document.getElementById("a2").innerHTML = rpl_data[1].rpl_atts;
+// document.getElementById("a3").innerHTML = rpl_data[2].rpl_atts;
+// document.getElementById("a4").innerHTML = rpl_data[3].rpl_atts;
+// document.getElementById("rti1").innerHTML = rpl_data[0].object;
+// document.getElementById("rti2").innerHTML = rpl_data[1].object;
+// document.getElementById("rti3").innerHTML = rpl_data[2].object;
+// document.getElementById("rti4").innerHTML = rpl_data[3].object;
   md.initDashboardPageCharts();
 }
 

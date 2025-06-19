@@ -1,11 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
+  <component name="PublishConfigData" serverName="root" remoteFilesAllowedToDisappearOnAutoupload="false" confirmBeforeUploading="false" autoUploadExternalChanges="true">
+    <option name="confirmBeforeUploading" value="false" />
     <serverData>
+      <paths name="aliyun">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/root/yuwei" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="root">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/www/wwwroot/yuwei" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="ty@&lt;主机&gt;:&lt;端口&gt;">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="ty@&lt;主机&gt;:&lt;端口&gt; (1)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="ty@&lt;主机&gt;:&lt;端口&gt; (2)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="xss121">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/xss/material-dashboard-django-master" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="xss@121:22">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/xss/sum" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="xss@121:22 (1)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="xss@121:22 (2)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/xss/material-dashboard-django-master" local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>

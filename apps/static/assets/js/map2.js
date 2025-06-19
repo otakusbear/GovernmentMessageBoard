@@ -202,7 +202,6 @@ $.get('/static/assets/js/wuhan.geojson', function (whJson) {
       }
       else {
           changeObj(mark);
-          changeObj2(mark);
       }
 
       // console.log(mark)

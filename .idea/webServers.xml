@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="805f8f0e-12f9-44b8-ae42-4684263bd63f" name="xss121">
+        <fileTransfer accessType="SFTP" host="10.102.64.121" port="22" sshConfigId="28e7e7c3-b1a7-44b9-b722-731c53023833" sshConfig="xss@10.102.64.121:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="eb90b5c7-f4a9-445a-8ffc-7b79bed2f32c" name="aliyun">
+        <fileTransfer accessType="SFTP" host="47.109.33.146" port="22" sshConfigId="981d0008-0288-4c49-9029-c1ef676a0b64" sshConfig="root@47.109.33.146:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+      <webServer id="3ded6c76-b1c4-4d47-b52e-b01ffa6b796c" name="root">
+        <fileTransfer accessType="SFTP" host="124.221.240.216" port="22" sshConfigId="82aba3f5-40de-439e-87d0-fe66417ff48b" sshConfig="root@124.221.240.216:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

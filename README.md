@@ -1,3 +1,62 @@
+## 如何本地运行项目
+* 安装环境依赖，包括npm包和python库
+* 导入sql数据库文件
+* 运行项目，
+``python manage.py runserver
+``
+## 项目文件结构
+```bash
+< 根目录 >
+   |
+   |-- core/                               # Implements app configuration核心配置
+   |    |-- settings.py                    # 全局配置，数据库中间件静态资源路径等
+   |    |-- wsgi.py                        # Start the app in production
+   |    |-- urls.py                        # Define URLs served by all apps/nodes
+   |
+   |-- apps/                               #应用模块目录
+   |    |
+   |    |-- home/                          # 提供网页服务的应用目录（后端）
+   |    |    |-- views.py                  # 编写视图函数处理用户的 HTML 页面请求逻辑
+   |    |    |-- urls.py                   # 定义简单的路由规则，映射 URL 到对应的视图函数 
+   |    |
+   |    |-- authentication/                # 处理登录、注册等功能（未使用）
+   |    |    |-- urls.py                   # Define authentication routes  
+   |    |    |-- views.py                  # Handles login and registration  
+   |    |    |-- forms.py                  # Define auth forms (login and register) 
+   |    |
+   |    |-- static/
+   |    |    |-- <css, JS, images>         # CSS Javascripts 字体图片等静态资源
+   |    |
+   |    |-- templates/                     # 渲染页面所用的模板（前端）
+   |         |-- includes/                 # 复用的页面或组件
+   |         |    |-- navigation.html      # 导航栏
+   |         |    |-- sidebar.html         # 侧边栏
+   |         |    |-- footer.html          # 页脚
+   |         |    |-- scripts.html         # Scripts common to all pages
+   |         |
+   |         |-- layouts/                   # 布局母版
+   |         |    |-- base-fullscreen.html  # Used by Authentication pages
+   |         |    |-- base.html             # Used by common pages
+   |         |
+   |         |-- accounts/                  # 账户认证相关的页面模板
+   |         |    |-- login.html            # Login page
+   |         |    |-- register.html         # Register page
+   |         |
+   |         |-- home/                      # 主要功能页面
+   |              |-- index.html            # 首页
+   |              |-- 404-page.html         # 404 页
+   |              |-- *.html                # 其他页面，开发新的页面的模板文件就在该目录创建html文件
+   |
+   |-- requirements.txt                     # 依赖文件
+   |
+   |-- .env                                 # Inject Configuration via Environment
+   |-- manage.py                            # django默认项目管理脚本
+   |
+   |-- ************************************************************************
+```
+
+## ----以下是初始开源页面模板的说明文件----
+
 # [Material Dashboard Django](https://www.creative-tim.com/product/material-dashboard-django) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/home?status=Material%20Dashboard,%20a%20free%20Material%20Bootstrap%204%20Admin%20Template%20%E2%9D%A4%EF%B8%8F%20https%3A//bit.ly/2Lyat1Y%20%23bootstrap%20%23material%20%23design%20%23developers%20%23freebie%20%20via%20%40CreativeTim)
 
  ![version](https://img.shields.io/badge/version-1.0.1-blue.svg) [![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/material-dashboard-django.svg?maxAge=2592000)](https://github.com/creativetimofficial/material-dashboard-django/issues?q=is%3Aopen+is%3Aissue) [![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/creativetimofficial/material-dashboard-django.svg?maxAge=2592000)](https://github.com/creativetimofficial/material-dashboard-django/issues?q=is%3Aissue+is%3Aclosed) [![Join the chat at https://gitter.im/NIT-dgp/General](https://badges.gitter.im/NIT-dgp/General.svg)](https://gitter.im/creative-tim-general/Lobby) [![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/E4aHAQy)

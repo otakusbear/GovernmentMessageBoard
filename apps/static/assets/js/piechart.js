@@ -123,27 +123,33 @@ function getDatabyLegend2(legend,list){
   },
   legend: {
     left: 'center',
-    top: 'bottom',
+    top: 'top',
     data: [
       '咨询',
         '建言',
         '投诉/求助',
-    ]
+    ],
+    textStyle: {
+            color: '#fff'
+        }
   },
   toolbox: {
     show: true,
+    orient: 'vertical',
+    left: 'right',
+    top: 'center',
     feature: {
       mark: { show: true },
-      dataView: { show: true, readOnly: false, title:'数据视图' },
+      // dataView: { show: true, readOnly: false, title:'数据视图' },
       restore: { show: true, title:'还原'},
-      saveAsImage: { show: true, title:'保存' }
+      saveAsImage: { show: true, title:'保存',name:'留言类型饼图'}
     }
   },
   series: [
     {
       name: '留言类型',
       type: 'pie',
-      radius: [10, '50%'],
+      radius: [10, '60%'],
       center: ['50%', '50%'],
       // roseType: 'radius',
       itemStyle: {
@@ -175,27 +181,33 @@ function getDatabyLegend2(legend,list){
   },
   legend: {
     left: 'center',
-    top: 'bottom',
+    top: 'top',
     data: [
       '正',
         '中',
         '负',
-    ]
+    ],
+    textStyle: {
+            color: '#fff'
+        }
   },
   toolbox: {
     show: true,
+    orient: 'vertical',
+    left: 'right',
+    top: 'center',
     feature: {
       mark: { show: true },
-      dataView: { show: true, readOnly: false, title:'数据视图' },
+      // dataView: { show: true, readOnly: false, title:'数据视图' },
       restore: { show: true, title:'还原'},
-      saveAsImage: { show: true, title:'保存' }
+      saveAsImage: { show: true, title:'保存',name:'留言情感倾向饼图' }
     }
   },
   series: [
     {
       name: '情感倾向',
       type: 'pie',
-      radius: [10, '50%'],
+      radius: [10, '60%'],
       center: ['50%', '50%'],
       // roseType: 'radius',
       itemStyle: {
@@ -227,28 +239,34 @@ function getDatabyLegend2(legend,list){
   },
   legend: {
     left: 'center',
-    top: 'bottom',
+    top: 'top',
     data: [
       '弱者框架',
         '抗争框架',
         '个人权益',
         '社会影响'
-    ]
+    ],
+    textStyle: {
+            color: '#fff'
+        }
   },
   toolbox: {
     show: true,
+    orient: 'vertical',
+    left: 'right',
+    top: 'center',
     feature: {
       mark: { show: true },
-      dataView: { show: true, readOnly: false, title:'数据视图' },
+      // dataView: { show: true, readOnly: false, title:'数据视图' },
       restore: { show: true, title:'还原'},
-      saveAsImage: { show: true, title:'保存' }
+      saveAsImage: { show: true, title:'保存',name:'留言话语模式饼图' }
     }
   },
   series: [
     {
       name: '留言话语模式',
       type: 'pie',
-      radius: [10, '50%'],
+      radius: [10, '60%'],
       center: ['50%', '50%'],
       // roseType: 'radius',
       itemStyle: {
@@ -281,34 +299,40 @@ function getDatabyLegend2(legend,list){
   },
   legend: {
     left: 'center',
-    top: 'bottom',
+    top: 'top',
     data: [
       '整改',
         '协商',
         '转办',
-    ]
+    ],
+    textStyle: {
+            color: '#fff'
+        }
   },
   toolbox: {
     show: true,
+    orient: 'vertical',
+    left: 'right',
+    top: 'center',
     feature: {
       mark: { show: true },
-      dataView: { show: true, readOnly: false, title:'数据视图' },
+      // dataView: { show: true, readOnly: false, title:'数据视图' },
       restore: { show: true, title:'还原'},
-      saveAsImage: { show: true, title:'保存' }
+      saveAsImage: { show: true, title:'保存',name:'回复态度饼图' }
     }
   },
   series: [
     {
       name: '回复态度',
       type: 'pie',
-      radius: [10, '50%'],
+      radius: [10, '60%'],
       center: ['50%', '50%'],
-      roseType: 'radius',
+      // roseType: 'radius',
       itemStyle: {
         borderRadius: 5
       },
       label: {
-        show: false
+        show: true
       },
       emphasis: {
         label: {
@@ -333,29 +357,35 @@ function getDatabyLegend2(legend,list){
   },
   legend: {
     left: 'center',
-    top: 'bottom',
+    top: 'top',
     data: [
       '7天内',
         '7-15天',
         '15天后',
-    ]
+    ],
+    textStyle: {
+            color: '#fff'
+        }
   },
   toolbox: {
     show: true,
+    orient: 'vertical',
+    left: 'right',
+    top: 'center',
     feature: {
       mark: { show: true },
-      dataView: { show: true, readOnly: false, title:'数据视图' },
+      // dataView: { show: true, readOnly: false, title:'数据视图' },
       restore: { show: true, title:'还原'},
-      saveAsImage: { show: true, title:'保存' }
+      saveAsImage: { show: true, title:'保存',name:'回复积极性饼图' }
     }
   },
   series: [
     {
       name: '回复积极性',
       type: 'pie',
-      radius: [10, '50%'],
+      radius: [10, '60%'],
       center: ['50%', '50%'],
-      roseType: 'radius',
+      // roseType: 'radius',
       itemStyle: {
         borderRadius: 5
       },
@@ -378,36 +408,42 @@ function getDatabyLegend2(legend,list){
 
 };
   option6 = {
-
+  // color:['#4d72d9','#76c4bf','#e5ffc7'],
   tooltip: {
     trigger: 'item',
     formatter: '{a} <br/>{b} : {c} ({d}%)'
   },
   legend: {
     left: 'center',
-    top: 'bottom',
+    top: 'top',
     data: [
       '共情话语',
         '规则话语',
         '描述话语',
-    ]
+    ],
+    textStyle: {
+            color: '#fff'
+        }
   },
   toolbox: {
     show: true,
+    orient: 'vertical',
+    left: 'right',
+    top: 'center',
     feature: {
       mark: { show: true },
-      dataView: { show: true, readOnly: false, title:'数据视图' },
+      // dataView: { show: true, readOnly: false, title:'数据视图' },
       restore: { show: true, title:'还原'},
-      saveAsImage: { show: true, title:'保存' }
+      saveAsImage: { show: true, title:'保存',name:'回复话语模式饼图' }
     }
   },
   series: [
     {
       name: '回复话语模式',
       type: 'pie',
-      radius: [10, '50%'],
+      radius: [10, '60%'],
       center: ['50%', '50%'],
-      roseType: 'radius',
+      // roseType: 'radius',
       itemStyle: {
         borderRadius: 5
       },
@@ -431,6 +467,12 @@ function getDatabyLegend2(legend,list){
 };
 
   baroption1 = {
+     grid: {
+        top: 40,
+        bottom: 40,
+        left: 40,
+        right: 40
+    },
   tooltip: {
     trigger: 'axis',
     axisPointer: {
@@ -438,7 +480,10 @@ function getDatabyLegend2(legend,list){
     }
   },
   legend: {
-    data: legendOption1
+    data: legendOption1,
+    textStyle: {
+            color: '#fff'
+        }
   },
   toolbox: {
     show: true,
@@ -447,22 +492,32 @@ function getDatabyLegend2(legend,list){
     top: 'center',
     feature: {
       mark: { show: true },
-      dataView: { show: true, readOnly: false, title:'数据视图' },
+      // dataView: { show: true, readOnly: false, title:'数据视图' },
       magicType: { show: true, type: ['line', 'bar', 'stack'], title:{line:'折线图',bar:'柱状图',stack:'堆叠图'} },
 
-      saveAsImage: { show: true, title:'保存' }
+      saveAsImage: { show: true, title:'保存',name:'各月留言分布图' }
     }
   },
   xAxis: [
     {
       type: 'category',
       axisTick: { show: false },
-      data: ['1', '2','3', '4', '5', '6','7','8','9','10','11','12']
+      data: ['1', '2','3', '4', '5', '6','7','8','9','10','11','12'],
+      axisLabel: {
+        textStyle: {
+            color: '#fff'
+        },
+      },
     }
   ],
   yAxis: [
     {
-      type: 'value'
+      type: 'value',
+      axisLabel: {
+        textStyle: {
+            color: '#fff'
+        },
+      },
     }
   ],
   series: [
@@ -470,6 +525,12 @@ function getDatabyLegend2(legend,list){
   ]
 };
   baroption2 = {
+    grid: {
+        top: 40,
+        bottom: 40,
+        left: 40,
+        right: 40
+    },
   tooltip: {
     trigger: 'axis',
     axisPointer: {
@@ -477,7 +538,10 @@ function getDatabyLegend2(legend,list){
     }
   },
   legend: {
-    data: legendOption2
+    data: legendOption2,
+    textStyle: {
+            color: '#fff'
+        }
   },
   toolbox: {
     show: true,
@@ -486,22 +550,36 @@ function getDatabyLegend2(legend,list){
     top: 'center',
     feature: {
       mark: { show: true },
-      dataView: { show: true, readOnly: false, title:'数据视图' },
+      // dataView: { show: true, readOnly: false, title:'数据视图' },
       magicType: { show: true, type: ['line', 'bar', 'stack'], title:{line:'折线图',bar:'柱状图',stack:'堆叠图'} },
 
-      saveAsImage: { show: true, title:'保存' }
+      saveAsImage: { show: true, title:'保存',name:'各领域留言分布图' }
     }
   },
   xAxis: [
     {
       type: 'category',
       axisTick: { show: false },
+      axisLabel: {
+        textStyle: {
+            color: '#fff'
+        },
+        interval: 0,
+        formatter: function(value) {
+            return value.split('').join('\n');
+        }
+      },
       data: ['城建', '环保','交通', '教育', '金融', '就业','旅游','企业','三农','体育','文娱','医疗','政务','治安']
     }
   ],
   yAxis: [
     {
-      type: 'value'
+      type: 'value',
+      axisLabel: {
+        textStyle: {
+            color: '#fff'
+        },
+      },
     }
   ],
   series: [
@@ -510,6 +588,16 @@ function getDatabyLegend2(legend,list){
 };
   updateOption();
 })();
+window.addEventListener('resize', function () {
+    myChart1.resize();
+    myChart2.resize();
+    myChart3.resize();
+    myChart4.resize();
+    myChart5.resize();
+    myChart6.resize();
+    myBarChart1.resize();
+    myBarChart2.resize();
+});
 function updateOption(){
   baroption1.legend.data=legendOption1;
   baroption2.legend.data=legendOption2;
@@ -546,7 +634,7 @@ function updateOption(){
 }
 function changeObj2(mark){
   filter_data=all_data.filter(function (e){return e.object===mark;})
-  console.log(filter_data);
+
   updateOption();
 }
 

@@ -10,13 +10,18 @@ __pycache__/
 *.db
 *.sqlite3
 *.log
-
+.cache/
 # venv
 env
 venv
 
 # other
 .DS_Store
+
+# Node.js 相关
+node_modules/
+npm-debug.log
+yarn-error.log
 
 # javascript
 package-lock.json

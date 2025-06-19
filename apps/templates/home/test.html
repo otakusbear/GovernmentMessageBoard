@@ -2,180 +2,438 @@
 {% load static %}
 <meta charset="utf-8" xmlns="http://www.w3.org/1999/html"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
-        <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-        <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/jquery"></script>
-        <script type="text/javascript" src="{% static "/assets/js/material-dashboard.js" %}"></script>
+{#        <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>#}
+{#        <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/jquery"></script>#}
+        <script src="{% static "/assets/js/core/popper.min.js" %}" type="text/javascript"></script>
+        <script src="{% static "/assets/js/core/flatpickr.min.js" %}" type="text/javascript"></script>
+        <script src="/static/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
 <!-- Material Icons -->
-        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
-  <!-- CSS Files -->
-  <link href="/static/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+        <link href="/static/assets/css/roundicon.css" rel="stylesheet">
+
+   <title>
+    政务新媒体互动内容分析及摘要生成系统 | 摘要生成
+  </title>
+<style>
+    .loadingdot {
+
+    left: 10px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ffffff;  /* 设置点的颜色为透明 */
+    border: 2px solid #1890ff;  /* 设置点的边框为浅蓝色 */
+    transition: transform .2s;  /* 添加过渡效果 */
+    cursor: pointer;
+    animation: jump 1s infinite;  /* 添加跳动动画 */
+  display: inline-block;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.loadingdot:nth-child(2) {
+    animation-delay: 0.2s;  /* 第二个点延迟1秒开始跳动 */
+}
+
+.loadingdot:nth-child(3) {
+    animation-delay: 0.4s;  /* 第三个点延迟2秒开始跳动 */
+}
+.loadingdot:nth-child(4) {
+    animation-delay: 0.6s;  /* 第三个点延迟2秒开始跳动 */
+}
+.loadingdot:nth-child(5) {
+    animation-delay: 0.8s;  /* 第三个点延迟2秒开始跳动 */
+}
+.loadingdot:nth-child(6) {
+    animation-delay: 1s;  /* 第三个点延迟2秒开始跳动 */
+}
+@keyframes jump {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0); }
+}
+  #loader {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 5s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+    .els {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+    /* 自定义纵向滚动条的样式 */
+.dropdown-menu::-webkit-scrollbar {
+  width: 10px; /* 设置滚动条宽度 */
+  border-radius: 5px; /* 设置滚动条圆角 */
+}
+
+/* 自定义滚动条轨道的样式 */
+.dropdown-menu::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+/* 自定义滚动条滑块的样式 */
+.dropdown-menu::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 5px; /* 设置滑块圆角 */
+}
+
+/* 鼠标悬停在滑块上时改变其颜色 */
+.dropdown-menu::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+@font-face {
+  font-family: "ali";font-weight: 100;src: url("/static/assets/fonts/Alimama_DongFangDaKai_Regular.woff2") format("woff2"),
+  url("/static/assets/fonts/Alimama_DongFangDaKai_Regular.woff") format("woff");
+  font-display: swap;
+}
+</style>
+<!-- CSS Files -->
+   <link href="/static/assets/css/material-kit.min.css" rel="stylesheet" />
+
+
+
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-        <link id="pagestyle" href="https://demos.creative-tim.com/material-kit/assets/css/material-kit.min.css?v=3.0.0" rel="stylesheet" />
-        <link id="pagestyle" href="https://appsrv1-147a1.kxcdn.com/material-kit2-pro-django-v1.0.4/css/material-kit-pro.css?v=3.0.0" rel="stylesheet">
-	<body>
-        <section class="py-7 bg-cover position-relative" style="background-image: url(&#39;https://appsrv1-147a1.kxcdn.com/material-kit2-pro-django-v1.0.4/img/city-profile.jpg&#39;);">
-  <div class="mask bg-gradient-dark"></div>
-  <div class="container position-relative z-index-2">
+<header>
+    <nav class="navbar navbar-expand-lg  blur border-radius-xl top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
+<div class="container-fluid px-0">
+{#<a class="navbar-brand font-weight-bolder ms-sm-3  d-none d-md-block" href="../" rel="tooltip" title="政务互动内容分析及摘要生成系统" data-placement="bottom" target="_blank">#}
+{#政务新媒体互动内容分析及摘要生成系统#}
+{#</a>#}
+{#<a class="navbar-brand font-weight-bolder ms-sm-3  d-block d-md-none" href="../" rel="tooltip" title="政务互动内容分析及摘要生成系统" data-placement="bottom" target="_blank">#}
+{#政务互动内容分析及摘要生成系统#}
+{#</a>#}
+<button class="navbar-toggler shadow-none ms-md-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon mt-2">
+<span class="navbar-toggler-bar bar1"></span>
+<span class="navbar-toggler-bar bar2"></span>
+<span class="navbar-toggler-bar bar3"></span>
+</span>
+</button>
+<div class="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0" id="navigation">
+<ul class="navbar-nav navbar-nav-hover ms-auto">
+<li class="nav-item mx-2">
+<a role="button" href="../" class="nav-link ps-2 d-flex cursor-pointer align-items-center">
+<i class="material-icons opacity-6 me-2 text-md">home</i>
+主页
+</a>
+
+</li>
+    <li class="nav-item mx-2">
+<a role="button" href="/domain.html" class="nav-link ps-2 d-flex cursor-pointer align-items-center">
+<i class="material-icons opacity-6 me-2 text-md">dashboard</i>
+民生数据分析
+</a>
+</li>
+<li class="nav-item mx-2">
+<a role="button" href="/map.html" class="nav-link ps-2 d-flex cursor-pointer align-items-center">
+<i class="material-icons opacity-6 me-2 text-md">table_chart</i>
+辖区数据查询
+</a>
+</li>
+<li class="nav-item mx-2">
+<a role="button" href="/search/" class="nav-link ps-2 d-flex cursor-pointer align-items-center">
+<i class="material-icons opacity-6 me-2 text-md">dashboard</i>
+民众留言查看
+</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+</header>
+<body>
+    <!-- Navbar Light -->
+
+
+        <section class="py-8 bg-cover position-relative" >
+
+
     <div class="col">
-{#      <div class="col-lg-5 my-auto">#}
-{#        <h2 class="text-white">摘要系统</h2>#}
-{##}
-{##}
-{#      </div>#}
-      <div class="col-lg-12 m-auto">
-        <div class="card card-contact card-raised" >
-          <form id="contact-form1" >
-              {% csrf_token %}
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-              <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
-                <h5 class="text-center text-white">摘要生成系统</h5>
-              </div>
-            </div>
-            <div class="card-body">
-{#              <div class="row">#}
-{#                <div class="col-3 mx-auto">#}
-{#                  <select class="form-control" name="cid" id="cid" onchange="selectcity1()">#}
-{#                      <option>请选择</option>#}
-{#                      <option>{{ city.pop }}</option>#}
-{#                      <option>{{ city.pop }}</option>#}
-{#                      <option>{{ city.pop }}</option>#}
-{#                      <option>{{ city.pop }}</option>#}
-{#                  </select>#}
-{#                </div>#}
-{#                <div class="col-3 mx-auto">#}
-{#                  <select class="form-control" name="did" id="did" onchange="selectcity2()">#}
-{#                      <option>请选择</option>#}
-{#                  </select>#}
-{#                </div>#}
-{#              </div>#}
-{#              <div class="input-group input-group-dynamic mb-4">#}
-{#                <select class="form-control" name="mid" id="mid">#}
-{#                    <option>请选择</option>#}
-{#                </select>#}
-{#              </div>#}
-              <div class="row">
-                  <div class="col-md-6">
-                      <div class="input-group input-group-static mb-4">
-                <label>输入要抽取摘要的留言</label>
-                <textarea name="msg1" style="resize: none" class="form-control" id="msg1" rows="6"></textarea>
-              </div>
-                  </div>
-                  <div class="col-md-6">
-                      <div class="p-3 d-flex">
-
-          <div class="ms-5">
-            <h5 class="text-dark">留言摘要</h5>
-            <span class="text-dark" id="summary">
-            </span>
-          </div>
-        </div>
-                  </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-6 text-center m-auto">
-                  <button type="button" onclick="sum()" class="btn bg-gradient-primary mb-0">抽取</button>
-                    <button type="button" onclick="abssum()" class="btn bg-gradient-primary mb-0">生成</button>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-        <section class="pt-5 mt-5">
-  <div class="container">
+        <section class="">
+<h2 class="text-center text-info" style="padding-bottom: 50px">政务新媒体互动内容语料库</h2>
     <div class="row justify-content-center">
       <div class="col-lg-12">
+
         <div class="card">
-            <div class="card-header card-header-tabs card-header-rose">
-                <h5 class="text-center text-white">数据表格</h5>
-                <div class="row" style="display: inline-block">
-                    <input id="query" placeholder="请输入要检索的关键词"><button type="button" class="btn btn-danger btn-block" onclick="query()">检索</button>
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                <div class="bg-gradient-info shadow-info border-radius-lg py-3 pe-1">
 
-                </div>
+                    <div class="col-md-12 text-center">
+                        <div class="nav-tabs-navigation">
+  <div class="nav-tabs-wrapper" style="display: flex; justify-content: space-between;margin-left: 10px;margin-right: 10px">
+  <ul class="nav nav-tabs" data-tabs="tabs" style="display: inline-flex;">
+    <li class="nav-item">
+      <a class="nav-link" href="/corpus/?source=rmw">
+        <i class="material-icons">sentiment_satisfied_alt</i> 人民网领导留言板
+        <div class="ripple-container"></div>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="/corpus/?source=cjw">
+        <i class="material-icons">category</i> 武汉城市留言板
+        <div class="ripple-container"></div>
+      </a>
+    </li>
+  </ul>
+  <div style="color: white; display: inline-block;">
+    共 {{ Page.paginator.count }} 个结果，这是第 {{ Page.start_index }} - {{ Page.end_index }} 条
+  </div>
+</div>
 
+</div>
+                        {% if source == 'cjw' %}
+                            <div class="dropdown" style="display: inline-block!important;">
+            <button class="btn bg-white dropdown-toggle" style="margin-bottom: 0" type="button" id="dropdownMenuButton0" data-bs-toggle="dropdown" aria-expanded="false">
+              地区
+            </button>
+            <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton0">
+
+    <li>
+        <a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&area=洪山区&type={{ type }}">洪山区</a>
+        <a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&area=江岸区&type={{ type }}">江岸区</a>
+        <a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&area=江汉区&type={{ type }}">江汉区</a>
+        <a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&area=硚口区&type={{ type }}">硚口区</a>
+        <a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&area=汉阳区&type={{ type }}">汉阳区</a>
+        <a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&area=武昌区&type={{ type }}">武昌区</a>
+        <a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&area=青山（化工）区&type={{ type }}">青山区</a>
+        <a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&area=东西湖区&type={{ type }}">东西湖区</a>
+        <a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&area=蔡甸区&type={{ type }}">蔡甸区</a>
+        <a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&area=江夏区&type={{ type }}">江夏区</a>
+        <a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&area=黄陂区&type={{ type }}">黄陂区</a>
+        <a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&area=新洲区&type={{ type }}">新洲区</a>
+        <a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&area=东湖高新区&type={{ type }}">东湖高新区</a>
+        <a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&area=武汉开发区&type={{ type }}">武汉开发区</a>
+
+    </li>
+            </ul>
+          </div>
+                    {% else %}
+                    <div class="dropdown" style="display: inline-block!important;">
+            <button class="btn bg-white dropdown-toggle" style="margin-bottom: 0" type="button" id="dropdownMenuButton0" data-bs-toggle="dropdown" aria-expanded="false">
+              地区
+            </button>
+            <ul style="height: 185px;overflow-y: scroll" class="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton0">
+             {% for cityname in cities %}
+    <li>
+      <a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&city={{ cityname }}&type={{ type }}">{{ cityname }}</a>
+    </li>
+  {% endfor %}            </ul>
+          </div>
+                    {% endif %}
+    <div class="dropdown" style="display: inline-block!important;">
+            <button class="btn bg-white dropdown-toggle" style="margin-bottom: 0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              留言状态
+            </button>
+            <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item border-radius-md" href="?state=已办理&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type={{ type }}">已办理</a></li>
+              <li><a class="dropdown-item border-radius-md" href="?state=待回复&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type={{ type }}">待回复</a></li>
+              <li><a class="dropdown-item border-radius-md" href="?state=办理中&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type={{ type }}">办理中</a></li>
+            </ul>
+          </div>
+                        {% if source == 'cjw' %}
+                            <div class="dropdown" style="display: inline-block!important;">
+            <button class="btn bg-white dropdown-toggle" style="margin-bottom: 0" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+              留言类型
+            </button>
+            <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton2">
+              <li><a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type=困难求助">困难求助</a></li>
+              <li><a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type=民意征集">民意征集</a></li>
+              <li><a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type=问题反映">问题反映</a></li>
+                <li><a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type=意见建议">意见建议</a></li>
+                <li><a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type=政策咨询">政策咨询</a></li>
+                <li><a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type=点赞">点赞</a></li>
+            </ul>
+          </div>
+                    {% else %}
+                    <div class="dropdown" style="display: inline-block!important;">
+            <button class="btn bg-white dropdown-toggle" style="margin-bottom: 0" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+              留言类型
+            </button>
+            <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton2">
+              <li><a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&type=投诉/求助">投诉/求助</a></li>
+              <li><a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&type=咨询">咨询</a></li>
+              <li><a class="dropdown-item border-radius-md" href="?state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&type=建言">建言</a></li>
+            </ul>
+          </div>
+                    {% endif %}
+                        <form method="POST" action="?state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type={{ type }}" style="display: inline-block;">
+    {% csrf_token %}
+    <div class="input-group input-group-static" style="border-radius: 8px;
+    background-color: white;display: inline-block!important;width: 200px">
+          <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+          <input style="padding-left: 10px;" class="form-control datepicker" placeholder="{{ request.session.start_date|default:'选择起始日期' }}" type="text" name="start_date" value="{{ request.session.start_date }}">
+        </div>
+                            <div class="input-group input-group-static" style="border-radius: 8px;
+    background-color: white;display: inline-block!important;width: 200px">
+          <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+          <input style="padding-left: 10px;" class="form-control datepicker" placeholder="{{ request.session.end_date|default:'选择结束日期' }}" type="text" name="end_date" value="{{ request.session.end_date }}">
+        </div>
+    <input type="submit" class="btn btn-white btn-block d-inline-block w-auto" style="margin: auto;height:36px;align-items: center" value="筛选">
+</form>
+
+    <input id="query" placeholder="{{ query }}" class="form-control d-inline-block w-auto" style="padding-left: 10px;background-color: white">
+    <button type="button" class="btn btn-white btn-block d-inline-block w-auto" onclick="query()" style="margin: auto;height:36px;align-items: center">检索</button>
+</div>
+            </div>
             </div>
           <div class="table-responsive">
             <table class="table align-items-center mb-0">
               <thead>
                 <tr>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">区域/留言标题</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">类型/领域</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">状态</th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">留言时间</th>
-                  <th class="text-secondary opacity-7">摘要</th>
+                  <th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7">标题/留言内容</th>
+                    <th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7">留言对象</th>
+                  <th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7">类型/领域</th>
+                  <th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7">状态</th>
+                  <th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7">留言时间</th>
+                    <th class="text-uppercase text-secondary text-md font-weight-bolder opacity-7">详情</th>
                 </tr>
               </thead>
               <tbody>
+              {% if Page %}
               {% for record in Page %}
                 <tr>
                   <td>
                     <div class="d-flex px-2 py-1">
                       <div class="d-flex flex-column justify-content-center">
-                        <h6 class="mb-0 text-xs">{{ record.object }}</h6>
-                        <p class="text-xs text-secondary mb-0">{{ record.title }}</p>
+                        <h6 class="mb-0 text-md">{% if record.留言标题 == None %}
+    未提供
+{% else %}
+    {{ record.留言标题|safe }}
+{% endif %}
+</h6>
+                        <p style="width: 15rem" class="text-md text-secondary mb-0 els" title="{{ record.留言内容|safe }}">{% if record.mark %}
+     {{ record.mark|safe }}
+   {% else %}
+     {{ record.留言内容 }}
+   {% endif %}</p>
                       </div>
                     </div>
                   </td>
-                  <td>
-                    <p class="text-xs font-weight-bold mb-0">{{ record.type }}</p>
-                    <p class="text-xs text-secondary mb-0">{{ record.domain }}</p>
+                <td>
+                    <div class="d-flex px-2 py-1">
+                        <h6 class="mb-0 text-md">{% if not record.留言对象 %}
+    未提供
+{% else %}
+    {{ record.留言对象 }}
+{% endif %}</h6>
+                    </div>
                   </td>
-                  <td class="align-middle text-center text-sm">
-                      {% if record.state == '已办理' %}
-                    <span class="badge badge-sm badge-success">{{ record.state }}</span>
-                      {% elif record.state == '办理中' %}
-                      <span class="badge badge-sm badge-warning">{{ record.state }}</span>
-                      {% else %}
-                      <span class="badge badge-sm badge-secondary">{{ record.state }}</span>
+                  <td>
+                    <p class="text-md font-weight-bold mb-0">{% if record.留言类型 == None %}
+    未提供
+{% else %}
+    {{ record.留言类型 }}
+{% endif %}</p>
+                    <p class="text-md text-secondary mb-0">{% if record.留言领域 == None %}
+    未提供
+{% else %}
+    {{ record.留言领域 }}
+{% endif %}</p>
+                  </td>
+                  <td class="align-middle text-uppercase text-sm">
+                      {% if record.留言状态 == '已办理' %}
+                    <span class="badge badge-sm bg-success">{{ record.留言状态 }}</span>
+                      {% elif record.留言状态 == '办理中' %}
+                      <span class="badge badge-sm bg-warning">{{ record.留言状态 }}</span>
+                      {% elif record.留言状态 == '待回复' %}
+                      <span class="badge badge-sm bg-secondary">{{ record.留言状态 }}</span>
+                          {% else %}
+                          <span class="badge badge-sm bg-secondary">{{ record.留言状态 }}</span>
                       {% endif %}
                   </td>
-                  <td class="align-middle text-center">
-                    <span class="text-secondary text-xs font-weight-bold">{{ record.msgtime }}</span>
-                  </td>
-                  <td class="align-middle">
-                       <button class="btn btn-rose btn-block-" onclick="tabsum('{{ record.msgcontent }}')">抽取</button>
-                  </td>
-                <td class="align-middle">
-                       <button class="btn btn-warning btn-block" onclick="tababssum('{{ record.msgcontent }}')">生成</button>
+                  <td class="align-middle text-uppercase">
+                    <span class="text-secondary text-md font-weight-bold">{% if record.留言时间|date:"Y年m月d日 H:i:s" == None %}
+    未提供
+{% else %}
+    {{ record.留言时间|date:"Y年m月d日 H:i:s" }}{% endif %}</span>
                   </td>
                 <td class="align-middle">
-                       <button class="btn btn-danger btn-block" onclick="tababssum('{{ record.msgcontent }}。{{ record.rplcontent }}')">多文档生成</button>
-                  </td>
-                <td class="align-middle">
-                       <button class="btn btn-danger btn-block" onclick="tabsum('{{ record.msgcontent }}。{{ record.rplcontent }}')">多文档抽取</button>
+                       <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal{{ forloop.counter }}">详情</button>
+                    <div class="modal fade" id="exampleModal{{ forloop.counter }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel{{ forloop.counter }}">标题：{% if not record.留言标题 %}
+                    未提供
+                {% else %}
+                    {{ record.留言标题|safe }}
+                {% endif %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="white-space: pre-wrap">
+                <h4>留言内容</h4>
+                {% if record.mark %}
+                    {{ record.mark|safe }}
+                {% else %}
+                    {{ record.留言内容|safe }}
+                {% endif %}
+                <br><br><h4>回复内容</h4>
+                <div id="replyContent{{ forloop.counter }}">
+                    {% if not record.回复内容 %}
+                        未提供
+                    {% else %}
+                        {{ record.回复内容|safe }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn bg-gradient-dark" onclick="getReply({{ forloop.counter }}, '{{ record.留言内容|safe }}')">智能回复</button>
+                <button type="button" class="btn bg-gradient-dark" data-bs-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="loadingWindow" style="z-index: 7000;left: 50%;top: 44%; transform: translate(-50%, -50%); text-align: center;align-items: center;padding-top: 50px;position:absolute;width: 200px;height: 150px;background-color: #f9f9f9d9;border-radius: 10px;box-shadow: 0px 0px 10px rgba(0,0,0,0.2); display: none;">
+    <div class="loadingdot"></div>
+    <div class="loadingdot"></div>
+    <div class="loadingdot"></div>
+
+    <p style="text-align: center;align-items: center;padding-top: 20px">智能回复生成中···</p>
+</div>
+
                   </td>
                 </tr>
                 {% endfor %}
+                  {% else %}
+                  <tr><td><div style="padding-left: 20px;">暂无数据!</div></td></tr>
+              {% endif %}
               </tbody>
             </table>
 
           </div>
 <div class="row justify-space-between py-2">
-            <div class="col-lg-8 mx-auto">
-            <ul class="pagination pagination-primary m-4">
+            <div class="col-lg-7 mx-auto">
+            <ul class="pagination pagination-info m-4 justify-content-center" style="display: flex;flex-wrap: wrap">
             <li class="page-item">
                 {% if Page.has_previous %}
-                    <a class="page-link" href="?page={{ Page.previous_page_number }}&query={{ query }}" aria-label="Previous">
+                    <a class="page-link" href="?page={{ Page.previous_page_number }}&state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type={{ type }}" aria-label="Previous">
                         <span aria-hidden="true"><i class="material-icons" aria-hidden="true">chevron_left</i></span>
                     </a>
                 {% endif %}
             </li>
             <li>
                 {% if ifEllipsis == 1 %}
-                    {% if Page.number >= 1 and Page.number <= 10 %}
+                    {% if Page.number >= 1 and Page.number <= 6 %}
                         {% for i in range1 %}
-                            {% if i >= 1 and i <= 10 %}
+                            {% if i >= 1 and i <= 6 %}
                                 <li {% if Page.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
-                                    <a class="page-link" href="?page={{ i }}&query={{ query }}">{{ i }}</a>
+                                    <a class="page-link" href="?page={{ i }}&state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type={{ type }}">{{ i }}</a>
                                 </li>
-                            {% elif i == 12 %}
+                            {% elif i == 8 %}
                                 <li {% if Page.number == Page.paginator.num_pages %} class="page-item active" {% else %} class="page-item" {% endif %}>
-                                    <a class="page-link" href="?page={{ Page.paginator.num_pages }}&query={{ query }}">{{ Page.paginator.num_pages }}</a>
+                                    <a class="page-link" href="?page={{ Page.paginator.num_pages }}&state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type={{ type }}">{{ Page.paginator.num_pages }}</a>
                                 </li>
-                            {% elif i == 11 %}
+                            {% elif i == 7 %}
                                 <li class="page-item">
                                     <a class="page-link">...</a>
                                 </li>
@@ -183,33 +441,33 @@
                         {% endfor %}
                     {% elif Page.number == Page.paginator.num_pages %}
                         {% for i in range1 %}
-                            {% if i >= 1 and i <= 10 %}
+                            {% if i >= 1 and i <= 6 %}
                                 <li {% if Page.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
-                                    <a class="page-link" href="?page={{ i }}&query={{ query }}">{{ i }}</a>
+                                    <a class="page-link" href="?page={{ i }}&state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type={{ type }}">{{ i }}</a>
                                 </li>
-                            {% elif i == 12 %}
+                            {% elif i == 8 %}
                                 <li {% if Page.number == Page.paginator.num_pages %} class="page-item active" {% else %} class="page-item" {% endif %}>
-                                    <a class="page-link" href="?page={{ Page.paginator.num_pages }}&query={{ query }}">{{ Page.paginator.num_pages }}</a>
+                                    <a class="page-link" href="?page={{ Page.paginator.num_pages }}&state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type={{ type }}">{{ Page.paginator.num_pages }}</a>
                                 </li>
-                            {% elif i == 11 %}
+                            {% elif i == 7 %}
                                 <li class="page-item">
                                     <a class="page-link">...</a>
                                 </li>
                             {% endif %}
                         {% endfor %}
-                    {% elif Page.number == 11 %}
+                    {% elif Page.number == 7 %}
                         {% for i in range3 %}
-                            {% if i >= 1 and i <= 10 %}
+                            {% if i >= 1 and i <= 6 %}
                                 <li {% if Page.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
-                                    <a class="page-link" href="?page={{ i }}&query={{ query }}">{{ i }}</a>
+                                    <a class="page-link" href="?page={{ i }}&state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type={{ type }}">{{ i }}</a>
                                 </li>
-                            {% elif i == 13 %}
+                            {% elif i == 9 %}
                                 <li {% if Page.number == Page.paginator.num_pages %} class="page-item active" {% else %} class="page-item"{% endif %}>
-                                    <a class="page-link" href="?page={{ Page.paginator.num_pages }}&query={{ query }}">{{ Page.paginator.num_pages }}</a>
+                                    <a class="page-link" href="?page={{ Page.paginator.num_pages }}&state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type={{ type }}">{{ Page.paginator.num_pages }}</a>
                                 </li>
-                            {% elif i == 11 %}
+                            {% elif i == 7 %}
                                 <li {% if Page.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
-                                    <a class="page-link" href="?page={{ i }}&query={{ query }}">{{ i }}</a>
+                                    <a class="page-link" href="?page={{ i }}&state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type={{ type }}">{{ i }}</a>
                                 </li>
                             {% else %}
                                 <li class="page-item">
@@ -219,17 +477,17 @@
                         {% endfor %}
                     {% elif Page.number == lastButOne  %}
                         {% for i in range3 %}
-                            {% if i >= 1 and i <= 10 %}
+                            {% if i >= 1 and i <= 6 %}
                                 <li {% if Page.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
-                                    <a class="page-link" href="?page={{ i }}&query={{ query }}">{{ i }}</a>
+                                    <a class="page-link" href="?page={{ i }}&state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type={{ type }}">{{ i }}</a>
                                 </li>
-                            {% elif i == 13 %}
+                            {% elif i == 9 %}
                                 <li {% if Page.number == Page.paginator.num_pages %} class="page-item active" {% else %} class="page-item" {% endif %}>
-                                    <a class="page-link" href="?page={{ Page.paginator.num_pages }}&query={{ query }}">{{ Page.paginator.num_pages }}</a>
+                                    <a class="page-link" href="?page={{ Page.paginator.num_pages }}&state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type={{ type }}">{{ Page.paginator.num_pages }}</a>
                                 </li>
-                            {% elif i == 12 %}
+                            {% elif i == 8 %}
                                 <li {% if Page.number == lastButOne %} class="page-item active" {% else %} class="page-item" {% endif %}>
-                                    <a class="page-link" href="?page={{ lastButOne }}&query={{ query }}">{{ lastButOne }}</a>
+                                    <a class="page-link" href="?page={{ lastButOne }}&state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type={{ type }}">{{ lastButOne }}</a>
                                 </li>
                             {% else %}
                                 <li class="page-item">
@@ -237,27 +495,27 @@
                                 </li>
                             {% endif %}
                         {% endfor %}
-                    {% elif Page.number > 11 and Page.number < lastButOne %}
+                    {% elif Page.number > 7 and Page.number < lastButOne %}
                         {% for i in range2 %}
-                            {% if i >= 1 and i <= 10 %}
+                            {% if i >= 1 and i <= 6 %}
                                 <li {% if Page.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
-                                    <a class="page-link" href="?page={{ i }}&query={{ query }}">{{ i }}</a>
+                                    <a class="page-link" href="?page={{ i }}&state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type={{ type }}">{{ i }}</a>
                                 </li>
-                            {% elif i == 11 %}
+                            {% elif i == 7 %}
                                 <li class="page-item">
                                     <a class="page-link">...</a>
                                 </li>
-                            {% elif i == 12 %}
+                            {% elif i == 8 %}
                                 <li class="page-item active">
-                                    <a class="page-link" href="?page={{ Page.number }}&query={{ query }}">{{ Page.number }}</a>
+                                    <a class="page-link" href="?page={{ Page.number }}&state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type={{ type }}">{{ Page.number }}</a>
                                 </li>
-                            {% elif i == 13 %}
+                            {% elif i == 9 %}
                                 <li class="page-item">
                                     <a class="page-link">...</a>
                                 </li>
-                            {% elif i == 14 %}
+                            {% elif i == 10 %}
                                 <li {% if Page.number == Page.paginator.num_pages %} class="page-item active" {% else %} class="page-item" {% endif %}>
-                                    <a class="page-link" href="?page={{ Page.paginator.num_pages }}&query={{ query }}">{{ Page.paginator.num_pages }}</a>
+                                    <a class="page-link" href="?page={{ Page.paginator.num_pages }}&state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type={{ type }}">{{ Page.paginator.num_pages }}</a>
                                 </li>
                             {% endif %}
                         {% endfor %}
@@ -265,51 +523,70 @@
                 {% elif ifEllipsis == 0 %}
                     {% for i in Page.paginator.page_range %}
                         <li {% if Page.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
-                            <a class="page-link" href="?page={{ i }}&query={{ query }}">{{ i }}</a>
+                            <a class="page-link" href="?page={{ i }}&state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type={{ type }}">{{ i }}</a>
                         </li>
                     {% endfor %}
                 {% endif %}
             </li>
             <li class="page-item">
                 {% if Page.has_next %}
-                    <a class="page-link" href="?page={{ Page.next_page_number }}&query={{ query }}" aria-label="Next">
+                    <a class="page-link" href="?page={{ Page.next_page_number }}&state={{ state }}&query={{ query }}&source={{ source }}&city={{ city }}&area={{ area }}&type={{ type }}" aria-label="Next">
                         <span aria-hidden="true"><i class="material-icons" aria-hidden="true">chevron_right</i></span>
                     </a>
                 {% endif %}
             </li>
-            <a class="text">共{{ Page.paginator.num_pages }}页</a>
-            <li class="input-group">
-                <a>
-                    跳转至<textarea class="input-group" style="resize:none" id="pageNum" size="1"></textarea>页
+            <li class="input-group text-md" style="display: flex;width: 100px"><a class="text-md" style="flex: none; display:flex;align-items: center">跳转至</a><input id="pageNum" placeholder="{{ Page.number }}" class="form-control d-inline-block" style="padding-left: 10px;background-color: white;width: 1px">
+                <a class="text-md" style="flex: none;display: flex;align-items: center">页</a></li>
+                <li style="display:inline" class="page-item">
+                <a class="page-link" onclick="getPage();"><span aria-label="true"><i class="material-icons" aria-hidden="true">reply</i></span>
                 </a>
             </li>
             </ul>
         </div>
-        <ul class="col-lg-4 mx-auto">
-{#            <li style="display: inline">#}
-{#                跳转至<input type="text" id="pageNum" size="1">页#}
-{#            </li>#}
-            <li style="display:inline" class="page-item">
-                <a class="page-link" onclick="getPage();">
-                    <span aria-label="true"><i class="material-icons" aria-hidden="true">reply</i></span>
-                </a>
-            </li>
-        </ul>
         </div>
       </div>
     </div>
   </div>
-  </div>
+
 </section>
 
     </div>
-  </div>
-</section>
 
-        <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/jquery"></script>
+</section>
+{#        <link rel="stylesheet" href="{% static "/assets/css/material-kit-pro.min.css" %}">#}
+{#        <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/jquery"></script>#}
+        <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
         <script type="text/javascript" src="{% static "/assets/js/plugins/bootstrap-notify.js" %}"></script>
-        <script type="text/javascript" src="{% static "/assets/js/material-dashboard.js" %}"></script>
+{#        <script type="text/javascript" src="{% static "/assets/js/material-dashboard.js" %}"></script>#}
+
+        <script src="{% static "/assets/js/core/bootstrap-material-design.min.js" %}" type="text/javascript"></script>
+{#        <script src="https://demos.creative-tim.com/material-kit-pro/assets/js/material-kit-pro.min.js?v=3.0.2" type="text/javascript"></script>#}
+
         <script type="text/javascript">
+              var md = {
+  misc: {
+    navbar_menu_visible: 0,
+    active_collapse: true,
+    disabled_collapse_init: 0,
+  },showNotification: function(from, align, msg) {
+    console.log(msg)
+    type = ['', 'info', 'danger', 'success', 'warning', 'rose', 'primary','light'];
+
+    color = Math.floor((Math.random() * 7) + 1);
+
+    $.notify({
+      icon: "add_alert",
+      message: msg
+
+    }, {
+      type: type[color],
+      timer: 3000,
+      placement: {
+        from: from,
+        align: align
+      }
+    });
+  },}
         function sum(){
             $.ajax({
                 type: "POST",
@@ -337,54 +614,6 @@
             })
         }
         var json_data1={}
-        function selectcity1(){
-            $.ajaxSetup({async :false});
-            $.ajax({
-                type: "GET",
-                url: '/get_obj/',
-                success: function (data) {
-                    json_data1 = JSON.parse(data)
-                }
-            })
-
-            var district=json_data1['district'];
-            var index1=document.getElementById("cid").selectedIndex;
-            var option1=document.getElementById("did");
-            option1.options.length=1;
-            for(var x=0;x<district[index1-1].length;x++){
-                var opt=document.createElement("option");
-                opt.innerHTML=district[index1-1][x];
-                option1.appendChild(opt);
-            }
-        }
-        function selectcity2(){
-            var district=json_data1['district'];
-            {#var district={{ data }}['object'];#}
-            $.ajaxSetup({async :false});
-            $.ajax({
-                type: "GET",
-                url: '/get_msg/',
-                success: function (data) {
-                    json_data2 = JSON.parse(data)
-                    console.log(json_data2)
-                }
-            })
-
-            var msg=json_data2['msgs'];
-            console.log(json_data2)
-            var index1=document.getElementById("cid").selectedIndex;
-            var index2=document.getElementById("did").selectedIndex;
-            var option2=document.getElementById("mid");
-            option2.options.length=1;
-            for(var y=0;y<district[index1-1].length;y++){
-                for(var x=0;x<50;x++){
-                    var opt=document.createElement("option");
-                    opt.innerHTML=msg[index1-1][index2-1][x];
-                    option2.appendChild(opt);
-            }
-            }
-
-        }
         function tabsum(text){
             $.ajax({
                 type: "GET",
@@ -393,26 +622,37 @@
                 success: function (data) {
                     console.log(data)
                     sum=data
+                    md.showNotification('top','center',sum);
                 }
             })
-            md.showNotification('top','center',sum);
         }
-        function tababssum(text){
+        function getReply(counter,msg){
+            var loadingWindow = document.getElementById('loadingWindow');
+    loadingWindow.style.display = 'block';
             $.ajax({
                 type: "GET",
-                url: '/get_abs/',
-                data:{'text':text},
+                url: '/get_rpl/',
+                data:{'msg':msg},
                 success: function (data) {
                     console.log(data)
-                    sum=data
+                    rpl=data
+                    loadingWindow.style.display = 'none';
+                    document.getElementById('replyContent' + counter).innerHTML = rpl;
                 }
             })
-            md.showNotification('top','center',sum);
+        }
+        function tababssum(text){
+
+            md.showNotification('top','center',text);
+
+
         }
         function getPage(){
             var pageNum = $('#pageNum').val();
+            const urlParams = new URLSearchParams(window.location.search);
+            const source = urlParams.get('source');
             if(pageNum>=1&&pageNum<={{ Page.paginator.num_pages }}){
-                location.assign("{% url 'ts' %}?page="+pageNum+"&query={{ query }}")
+                location.assign("{% url 'ts' %}?page="+pageNum+"&query={{ query }}&source="+source+"&state={{ state }}&city={{ city }}&area={{ area }}&type={{ type }}")
             }
             else{
                 alert('请输入正确的页码')
@@ -421,15 +661,153 @@
 
         function query(){
             queryt=$('#query').val();
+            const urlParams = new URLSearchParams(window.location.search);
+            const source = urlParams.get('source');
             if(queryt!==''){
-                location.assign("{% url 'ts' %}?query="+queryt)
+                location.assign("{% url 'ts' %}?query="+queryt+"&source="+source+"&state={{ state }}&city={{ city }}&area={{ area }}&type={{ type }}")
+                {#$("#table").load(location.href + " #table","");#}
             }
             else {
                 alert('输入关键词为空！')
             }
 
         }
+        function updateProgress() {
+    let progressBar = document.getElementById("myProgressBar");
+    progressBar.style.width = '0%';
+    progressBar.setAttribute('aria-valuenow', 0);
+  let width = 0;
+  let time = 5000; // 20s
+  let intervalTime = time / 100;
+  let id = setInterval(frame, intervalTime);
+
+  function frame() {
+    if (width >= 100) {
+      clearInterval(id);
+    } else {
+      width++;
+      progressBar.style.width = width + '%';
+      progressBar.setAttribute('aria-valuenow', width);
+    }
+  }
+  }
+        {#function select(){#}
+        {#    $.ajaxSetup({async :false});#}
+        {#    $.ajax({#}
+        {#        type: "GET",#}
+        {#        url: '/get_obj/',#}
+        {#        success: function (data) {#}
+        {#            json_data1 = JSON.parse(data)#}
+        {#        }#}
+        {#    })#}
+        {##}
+        {#    var district=json_data1['district'];#}
+        {#    var index1=document.getElementById("cid").selectedIndex;#}
+        {#    var option1=document.getElementById("did");#}
+        {#    option1.options.length=1;#}
+        {#    for(var x=0;x<district[index1-1].length;x++){#}
+        {#        var opt=document.createElement("option");#}
+        {#        opt.innerHTML=district[index1-1][x];#}
+        {#        option1.appendChild(opt);#}
+        {#    }#}
+        {#    $.ajax({#}
+        {#        type: "GET",#}
+        {#        url: '/queryPage/',#}
+        {#        data:{'query':queryt},#}
+        {#        success: function (data) {#}
+        {#            console.log(data)#}
+        {#            $("#table").load(location.href + " #table","");#}
+        {#        }#}
+        {#    })#}
+        {# }#}
+        {#$("#table").load(location.href + " #table","");#}
     </script>
+<script>
+function startProgress() {
+  document.getElementById("loader").style.display = "block";
+  document.body.style.cursor = "wait";
+
+  setTimeout(() => {
+    document.getElementById("loader").style.display = "none";
+    document.body.style.cursor = "default";
+  }, 5000);
+}
+function showAbs(button,text,time) {
+    // Save the original content of the button
+    var originalContent = button.innerHTML;
+
+    // Replace the content of the button with the spinner
+    button.innerHTML = '<div class="spinner"></div>';
+
+    // After 5 seconds, restore the original content of the button
+    setTimeout(function() {
+        button.innerHTML = originalContent;
+        tababssum(text);
+    }, time);
+}
+function showExt(button,text,time) {
+    // Save the original content of the button
+    var originalContent = button.innerHTML;
+
+    // Replace the content of the button with the spinner
+    button.innerHTML = '<div class="spinner"></div>';
+
+    // After 5 seconds, restore the original content of the button
+    setTimeout(function() {
+        button.innerHTML = originalContent;
+        tabsum(text);
+    }, time);
+}
+const ps = document.querySelectorAll('p');
+ps.forEach(p => {
+  const firstSpan = p.querySelector('span');
+  if (firstSpan) {
+    const textBeforeSpan = p.innerHTML.split(firstSpan.outerHTML)[0];
+    if (textBeforeSpan.length > 5) {
+      p.innerHTML = '...' + textBeforeSpan.slice(-5) + firstSpan.outerHTML + p.innerHTML.split(firstSpan.outerHTML)[1];
+    }
+  }
+});
+</script>
+<script>
+     let placehd='{{ query }}';
+    // Replace this with the actual value of query
+    let inputElement = document.getElementById('query');
+    if (placehd === 'None') {
+        inputElement.setAttribute('placeholder', '请输入关键词');
+    } else {
+        inputElement.setAttribute('placeholder', placehd);
+    }
+</script>
+<script type="text/javascript">
+    document.getElementById('query').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        query();
+    }
+});
+</script>
+<script>
+$(document).ready(function() {
+  // Get the value of the source parameter from the URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const source = urlParams.get('source');
+
+  if (source === 'cjw') {
+    $('a[href="/corpus/?source=cjw"]').addClass('active');
+    $('a[href="/corpus/?source=rmw"]').removeClass('active');
+  } else {
+    $('a[href="/corpus/?source=rmw"]').addClass('active');
+    $('a[href="/corpus/?source=cjw"]').removeClass('active');
+  }
+});
+
+</script>
+<script>
+  if (document.querySelector(".datepicker")) {
+     flatpickr(".datepicker", {});
+  }
+</script>
 
 	</body>
 </html>

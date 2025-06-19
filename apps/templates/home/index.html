@@ -85,7 +85,8 @@
     <div class="row">
     <div class="col-md-12">
     <div class="card card-chart">
-        <div class="card-header card-header-rose">
+        <div class="card-header card-header-success">
+            <h3>武汉市政民互动数据</h3>
             <div class="nav-tabs-navigation">
               <div class="nav-tabs-wrapper">
                 <ul class="nav nav-tabs" data-tabs="tabs">
@@ -108,7 +109,7 @@
 {#              <span class="text-success"><i class="fa fa-long-arrow-up"></i>{{ obj }}</span> 是留言量最高的区域</p>#}
         </div>
         <div class="card-body">
-            <div id="container" style="height: 500%"></div>
+            <div id="container" style="height: 600%"></div>
           </div>
 {#          <div class="card-footer">#}
 {#            <div class="stats">#}
@@ -174,7 +175,42 @@
       <div class="col-md-6">
         <div class="card card-chart">
           <div class="card-header card-header-warning">
-            <div class="ct-chart" id="websiteViewsChart" style="height: 300%"></div>
+              <div class="nav-tabs-navigation">
+              <div class="nav-tabs-wrapper">
+
+                <ul class="nav nav-tabs" data-tabs="tabs">
+                  <li class="nav-item">
+                    <a class="nav-link active" href="#msgNum0" onclick="md.initDashboardPageCharts()" data-toggle="tab">
+                      <i class="material-icons">chat_bubble</i> 留言量
+                      <div class="ripple-container"></div>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#rplNum0" onclick="md.initDashboardPageCharts()" data-toggle="tab">
+                      <i class="material-icons">forum</i> 回复量
+                      <div class="ripple-container"></div>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#timeMean0" onclick="md.initDashboardPageCharts()" data-toggle="tab">
+                      <i class="material-icons">schedule</i> 回复时间差
+                      <div class="ripple-container"></div>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane active" id="msgNum0">
+                    <div class="ct-chart" id="websiteViewsChart" style="height: 300%"></div>
+                </div>
+                <div class="tab-pane" id="rplNum0">
+                    <div class="ct-chart" id="rplNumBarChart" style="height: 300%"></div>
+                </div>
+                <div class="tab-pane" id="timeMean0">
+                    <div class="ct-chart" id="timeMeanBarChart" style="height: 300%"></div>
+                </div>
+            </div>
           </div>
           <div class="card-body">
             <h4 class="card-title">各领域留言量</h4>
@@ -622,9 +658,9 @@
       <div class="col-lg-12 col-md-12">
         <div class="card">
           <div class="card-header card-header-tabs card-header-warning">
+              <h3 class="card-title">数据轮播表</h3>
             <div class="nav-tabs-navigation">
               <div class="nav-tabs-wrapper">
-                <span class="nav-tabs-title">数据:</span>
                 <ul class="nav nav-tabs" data-tabs="tabs">
                   <li class="nav-item">
                     <a class="nav-link active" href="#msg" data-toggle="tab">
@@ -645,81 +681,119 @@
           <div class="card-body table-responsive">
             <div class="tab-content">
                 <div class="tab-pane active" id="msg">
-                    <table class="table table-hover">
-              <thead class="text-dark">
-                <th>标题</th>
-                <th>类型</th>
-                <th>领域</th>
-                <th>状态</th>
-                <th>区域</th>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><p id="t1"></p></td>
-                  <td><p id="ty1"></p></td>
-                  <td><p id="d1"></p></td>
-                  <td><p id="s1"></p></td>
-                  <td><p id="ti1"></p></td>
-                </tr>
-                <tr>
-                  <td><p id="t2"></p></td>
-                  <td><p id="ty2"></p></td>
-                  <td><p id="d2"></p></td>
-                  <td><p id="s2"></p></td>
-                  <td><p id="ti2"></p></td>
-                </tr>
-                <tr>
-                  <td><p id="t3"></p></td>
-                  <td><p id="ty3"></p></td>
-                  <td><p id="d3"></p></td>
-                  <td><p id="s3"></p></td>
-                  <td><p id="ti3"></p></td>
-                </tr>
-                <tr>
-                  <td><p id="t4"></p></td>
-                  <td><p id="ty4"></p></td>
-                  <td><p id="d4"></p></td>
-                  <td><p id="s4"></p></td>
-                  <td><p id="ti4"></p></td>
-                </tr>
-              </tbody>
-            </table>
+{#                    <table class="table table-hover">#}
+{#              <thead class="text-dark">#}
+{#                <th>标题</th>#}
+{#                <th>类型</th>#}
+{#                <th>领域</th>#}
+{#                <th>状态</th>#}
+{#                <th>区域</th>#}
+{#                <th>情感倾向</th>#}
+{#                <th>话语模式</th>#}
+{#                <th>时间</th>#}
+{#              </thead>#}
+{#              <tbody class="scroll">#}
+{#              {% for i in range %}#}
+{#                <tr>#}
+{#                    <td><p class="els10" id="title{{ i }}"></p></td>#}
+{#                    <td><p id="type{{ i }}"></p></td>#}
+{#                    <td><p id="domain{{ i }}"></p></td>#}
+{#                    <td><p id="state{{ i }}"></p></td>#}
+{#                    <td><p id="object{{ i }}"></p></td>#}
+{#                    <td><p id="senti{{ i }}"></p></td>#}
+{#                    <td><p id="msgmod{{ i }}"></p></td>#}
+{#                    <td><p id="msgtime{{ i }}"></p></td>#}
+{#                  <td><p class="els10" title="{{ msgdata.msgcontent|index:i }}">{{ msgdata.title|index:i }}</p></td>#}
+{#                  <td><p title="{{ msgdata.type|index:i }}">{{ msgdata.type|index:i }}</p></td>#}
+{#                  <td><p title="{{ msgdata.domain|index:i }}">{{ msgdata.domain|index:i }}</p></td>#}
+{#                  <td><p title="{{ msgdata.state|index:i }}">{{ msgdata.state|index:i }}</p></td>#}
+{#                  <td><p title="{{ msgdata.object|index:i }}">{{ msgdata.object|index:i }}</p></td>#}
+{#                  <td><p title="{{ msgdata.senti|index:i }}">{{ msgdata.senti|index:i }}</p></td>#}
+{#                  <td><p title="{{ msgdata.msg_mods|index:i }}">{{ msgdata.msg_mods|index:i }}</p></td>#}
+{#                  <td><p title="{{ msgdata.msgtime|index:i|date:"Y年m月d日 H:i:s" }}">{{ msgdata.msgtime|index:i|date:"Y年m月d日 H:i:s" }}</p></td>#}
+{#                </tr>#}
+{#              {% endfor %}#}
+{#              </tbody>#}
+{#            </table>#}
+                    <div class="topRec_List">
+						<dl>
+							<dd style="word-wrap: break-word">留言标题</dd>
+							<dd style="word-wrap: break-word">类型</dd>
+							<dd>领域</dd>
+                            <dd>状态</dd>
+                            <dd>区域</dd>
+                            <dd>情感倾向</dd>
+                            <dd>话语模式</dd>
+                            <dd>留言时间</dd>
+						</dl>
+						<div class="maquee">
+							<ul style="padding-left: 0">
+                                {% for i in range %}
+								<li style="list-style: none">
+                                    <div><p class="els" id="title{{ i }}"></p></div>
+                                    <div><p class="els" id="type{{ i }}"></p></div>
+									<div><p class="els" id="domain{{ i }}"></p></div>
+									<div><span class="els" id="state{{ i }}"></span></div>
+                                    <div><p class="els" id="object{{ i }}"></p></div>
+                                    <div><span class="els" id="senti{{ i }}"></span></div>
+                                    <div><p class="els" id="msgmod{{ i }}"></p></div>
+                                    <div><p class="els" id="msgtime{{ i }}"></p></div>
+								</li>
+                                {% endfor %}
+							</ul>
+						</div>
+                    </div>
                 </div>
                 <div class="tab-pane" id="rpl">
-                    <table class="table table-hover">
-              <thead class="text-dark">
-                <th>回复内容</th>
-                <th>回复组织</th>
-                <th>回复态度</th>
-                <th>区域</th>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><p id="c1"></p></td>
-                  <td><p id="o1"></p></td>
-                  <td><p id="a1"></p></td>
-                  <td><p id="rti1"></p></td>
-                </tr>
-                <tr>
-                  <td><p id="c2"></p></td>
-                  <td><p id="o2"></p></td>
-                  <td><p id="a2"></p></td>
-                  <td><p id="rti2"></p></td>
-                </tr>
-                <tr>
-                  <td><p id="c3"></p></td>
-                  <td><p id="o3"></p></td>
-                  <td><p id="a3"></p></td>
-                  <td><p id="rti3"></p></td>
-                </tr>
-                <tr>
-                  <td><p id="c4"></p></td>
-                  <td><p id="o4"></p></td>
-                  <td><p id="a4"></p></td>
-                  <td><time id="rti4"></time></td>
-                </tr>
-              </tbody>
-            </table>
+                <div class="rplList">
+						<dl>
+                            <dd>留言标题</dd>
+							<dd>回复内容</dd>
+							<dd>回复组织</dd>
+							<dd>回复态度</dd>
+                            <dd>话语模式</dd>
+                            <dd>回复时间</dd>
+						</dl>
+						<div class="maquee">
+							<ul style="padding-left: 0">
+                                {% for i in range %}
+								<li style="list-style: none">
+                                    <div><p class="els" id="title0{{ i }}"></p></div>
+									<div><p class="els" id="rplcontent{{ i }}"></p></div>
+                                    <div><p class="els" id="rplorg{{ i }}"></p></div>
+                                    <div><p class="els" id="rpl_atts{{ i }}"></p></div>
+                                    <div><span class="els" id="rpl_mods{{ i }}"></span></div>
+                                    <div><p class="els" id="rpltime{{ i }}"></p></div>
+								</li>
+                                {% endfor %}
+							</ul>
+						</div>
+                    </div>
+{#                    <table class="table">#}
+{#              <thead class="fixedThead">#}
+{#                <th>回复内容</th>#}
+{#                <th>回复组织</th>#}
+{#                <th>回复态度</th>#}
+{#                <th>话语模式</th>#}
+{#                <th>时间</th>#}
+{#              </thead>#}
+{#              <tbody class="scroll">#}
+{#              {% for i in range %}#}
+{#                        <tr>#}
+{#                            <td><p class="els15" id="rplcontent{{ i }}"></p></td>#}
+{#                            <td><p id="rplorg{{ i }}"></p></td>#}
+{#                            <td><p id="rpl_atts{{ i }}"></p></td>#}
+{#                            <td><p id="rpl_mods{{ i }}"></p></td>#}
+{#                            <td><p id="rpltime{{ i }}"></p></td>#}
+{#                  <td><p class="els15" title="{{ rpldata.rplcontent|index:i }}">{{ rpldata.rplcontent|index:i }}</p></td>#}
+{#                  <td><p title="{{ rpldata.rplorg|index:i }}">{{ rpldata.rplorg|index:i }}</p></td>#}
+{#                  <td><p title="{{ rpldata.rpl_atts|index:i }}">{{ rpldata.rpl_atts|index:i }}</p></td>#}
+{#                  <td><p title="{{ rpldata.rpl_mods|index:i }}">{{ rpldata.rpl_mods|index:i }}</p></td>#}
+{#                  <td><p title="{{ rpldata.rpltime|index:i|date:"Y年m月d日 H:i:s" }}">{{ rpldata.rpltime|index:i|date:"Y年m月d日 H:i:s" }}</p></td>#}
+{#                </tr>#}
+{#              {% endfor %}#}
+{#              </tbody>#}
+{#            </table>#}
                 </div>
             </div>
           </div>
@@ -731,7 +805,7 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-    <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/jquery"></script>
+{#    <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/jquery"></script>#}
   <script type="text/javascript" src="{% static "/assets/js/echarts.min.js" %}"></script>
   <script src="{% static "/assets/js/map.js" %}"></script>
 <script src="{% static "assets/js/material-dashboard.js" %}"></script>
@@ -742,5 +816,53 @@
 
     });
   </script>
+    <script type="text/javascript">
+	  function autoScroll(obj){
+			$(obj).find("ul").animate({
+				marginTop : "-54px"
+			},1500,function(){
+				$(this).css({marginTop : "0px"}).find("li:first").appendTo(this);
+			})
+		}
+        var myInterval;
+		$(function(){
+			myInterval=setInterval('autoScroll(".maquee")',3000);
+            $('.maquee').hover(function (){
+                clearInterval(myInterval);
+            },function (){
+                myInterval=setInterval('autoScroll(".maquee")',3000);
+            })
+		})
+</script>
+{#    <script type="text/javascript">#}
+{#	  function autoScroll(obj){#}
+{#			$(obj).animate({#}
+{#				marginTop : "-40px"#}
+{#			},500,function(){#}
+{#				$(this).css({marginTop : "0px"}).find("tr:first").appendTo(this);#}
+{#			})#}
+{#		}#}
+{#		$(function(){#}
+{#			setInterval('autoScroll(".scroll")',2000);#}
+{#		})#}
+{#</script>#}
+{#    <script type="text/javascript">#}
+{#            //先在table的最后增加一行，然后再把第一行中的数据填充到新增加的行中，最后再删除table的第一行#}
+{#            function change(table) {#}
+{#              var row = table.insertRow(table.rows.length); //在table的最后增加一行,table.rows.length是表格的总行数#}
+{#              for (j = 0; j < table.rows[0].cells.length; j++) {#}
+{#                //循环第一行的所有单元格的数据，让其加到最后新加的一行数据中（注意下标是从0开始的）#}
+{#                var cell = row.insertCell(j); //给新插入的行中添加单元格#}
+{#                cell.height = "24px"; //一个单元格的高度，跟css样式中的line-height高度一样#}
+{#                cell.innerHTML = table.rows[0].cells[j].innerHTML; //设置新单元格的内容，这个根据需要，自己设置#}
+{#              }#}
+{#              table.deleteRow(0); //删除table的第一行#}
+{#            }#}
+{#            function tableInterval() {#}
+{#              var table = document.getElementById("scroll"); //获得表格#}
+{#              change(table); //执行表格change函数，删除第一行，最后增加一行，类似行滚动#}
+{#            }#}
+{#            setInterval("tableInterval()", 2000); //每隔2秒执行一次change函数，相当于table在向上滚动一样#}
+{#          </script>#}
 <script src="{% static "assets/js/piechart.js" %}"></script>
 {% endblock javascripts %}

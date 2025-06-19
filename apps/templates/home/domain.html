@@ -1,0 +1,326 @@
+<!doctype html>
+
+<meta charset="utf-8">
+<title>政务互动内容分析平台</title>
+<link href="/static/assets/css/style.css"  rel="stylesheet" type="text/css" media="all" />
+<link href="/static/assets/css/recommend.css"  rel="stylesheet" type="text/css" media="all" />
+<link href="/static/assets/css/comment.css"  rel="stylesheet" type="text/css" media="all" />
+<script src="/static/assets/js/echarts.min.js" charset="utf-8"></script>
+<script src="/static/assets/js/jquery-3.2.0.min.js" charset="utf-8"></script>
+{#<script src="/static/assets/js/material-dashboard.js"></script>#}
+
+{#<script src="/static/assets/js/map.js"></script>#}
+
+<body>
+<div class="wpbox">
+<div class="bnt">
+  <div class="topbnt_left fl" style="padding-top: 1%;">
+   <ul><a href="/traffic.html">
+            <button class="button type2" style="margin: 0 0.5em;padding: 0.4em 1em;">图表模式</button>
+        </a>
+      <a href="/table.html">
+            <button class="button type2" style="margin: 0 0.5em;padding: 0.4em 1em;">表格模式</button>
+        </a>
+    <a href="/corpus/">
+            <button class="button type2" style="margin: 0 0.5em;padding: 0.4em 1em;">语料库</button>
+        </a>
+   </ul>
+  </div>
+  <h1 class="tith1 fl" style="color: #0d47a1">政务新媒体互动内容分析及摘要生成系统</h1>
+  <div class=" fr topbnt_right" style="padding-top: 1%;">
+    <ul>
+<a href="/domain.html">
+            <button class="button type2" style="margin: 0 0.5em;padding: 0.4em 1em;">民生数据分析</button>
+        </a>
+      <a href="/map.html">
+            <button class="button type2" style="margin: 0 0.5em;padding: 0.4em 1em;">辖区数据查询</button>
+        </a>
+        <a href="/search/">
+            <button class="button type2" style="margin: 0 0.5em;padding: 0.4em 1em;">民众留言查看</button>
+        </a>
+    </ul>
+   </ul>
+  </div>
+</div>
+<!-- bnt end -->
+<div class="main clearfix">
+    <div class="main-full" style="text-align: center; font-weight: bold">
+
+<select id="city-select" style="z-index: 10;height: 40.38px;
+    width: 90px;
+    margin: 0.8em 0.8em;border-radius: 5px">
+    <option value="" disabled selected>选择城市</option>
+    <option value="武汉">武汉</option>
+  <option value="长沙">长沙</option>
+  <option value="郑州">郑州</option>
+  <option value="南昌">南昌</option>
+</select>
+        <a href="/subdomain.html?domain=城建&city=">
+            <button class="button type1">城建</button>
+        </a>
+        <a href="/subdomain.html?domain=教育&city=">
+            <button class="button type1">教育</button>
+        </a>
+        <a href="/subdomain.html?domain=就业&city=">
+            <button class="button type1">就业</button>
+        </a>
+        <a href="/subdomain.html?domain=企业&city=">
+            <button class="button type1">企业</button>
+        </a>
+        <a href="/subdomain.html?domain=交通&city=">
+            <button class="button type1">交通</button>
+        </a>
+    </div>
+
+    <div class="main-half" style="margin-top: -20px">
+        <div class="border-container" style="height: 400px;">
+            <div class="no">
+                <div class="name-title">
+                    民生领域留言情感分析
+                </div>
+                <div id="emotion" style="height: 328px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1683768491536"><div style="position: relative; overflow: hidden; width: 351px; height: 328px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;"><canvas data-zr-dom-id="zr_0" width="351" height="270" style="position: absolute; left: 0px; top: 0px; width: 351px; height: 328px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div style="position: absolute; display: none; border-style: solid; white-space: nowrap; z-index: 9999999; transition: left 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s, top 0.4s cubic-bezier(0.23, 1, 0.32, 1) 0s; background-color: rgba(50, 50, 50, 0.7); border-width: 0px; border-color: rgb(51, 51, 51); border-radius: 4px; color: rgb(255, 255, 255); font: 14px / 21px &quot;Microsoft YaHei&quot;; padding: 5px; left: 631px; top: 64px; pointer-events: none;">环保<br><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#9e94b6;"></span>负面留言: 360<br><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#7ed0f8;"></span>中性留言: 32<br><span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:#faaa89;"></span>正面留言: 33</div></div>
+                <span class="top-left border-span"></span>
+                <span class="top-right border-span"></span>
+                <span class="bottom-left border-span"></span>
+                <span class="bottom-right border-span"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-half" style="margin-top: -20px">
+        <div class="border-container" style="height: 400px;">
+            <div class="no">
+                <div class="name-title">
+                    热门民生领域留言回复量
+                </div>
+                <div id="amount" style="height: 328px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1683768491535"><div style="position: relative; overflow: hidden; width: 351px; height: 328px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="351" height="270" style="position: absolute; left: 0px; top: 0px; width: 351px; height: 328px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+                <span class="top-left border-span"></span>
+                <span class="top-right border-span"></span>
+                <span class="bottom-left border-span"></span>
+                <span class="bottom-right border-span"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-half">
+        <div class="border-container" style="height: 400px;">
+            <div class="name-title">
+                热门民生领域留言回复情况
+            </div>
+            <table class="table table-kingdargen" style="margin-top: 15px;color: black">
+                <thead>
+                <tr style="height: 36px;">
+                    <th>领域名称</th>
+                    <th>已回复条数</th>
+                    <th>处理中条数</th>
+                    <th>待处理条数</th>
+                </tr>
+                </thead>
+                <tbody style="text-align: center; background-color: #f9f9f9">
+                <tr>
+                    <td>就业</td>
+                    <td id="rn1">90</td>
+                    <td id="in1">1</td>
+                    <td id="tn1">13</td>
+                </tr>
+                <tr>
+                    <td>城建</td>
+                    <td id="rn2"></td>
+                    <td id="in2">2234</td>
+                    <td id="tn2">7</td>
+                </tr>
+                <tr>
+                    <td>教育</td>
+                    <td id="rn3">425</td>
+                    <td id="in3">1</td>
+                    <td id="tn3">148</td>
+                </tr>
+                <tr>
+                    <td>交通</td>
+                    <td id="rn4">360</td>
+                    <td id="in4">1</td>
+                    <td id="tn4">140</td>
+                </tr>
+                <tr>
+                    <td>企业</td>
+                    <td id="rn5">72</td>
+                    <td id="in5">2</td>
+                    <td id="tn5">15</td>
+                </tr>
+                </tbody>
+            </table>
+            <span class="top-left border-span"></span>
+            <span class="top-right border-span"></span>
+            <span class="bottom-left border-span"></span>
+            <span class="bottom-right border-span"></span>
+        </div>
+    </div>
+
+    <div class="main-half">
+        <div class="border-container" style="height: 400px;">
+            <div class="no">
+                <div class="name-title">
+                    热门民生领域留言回复率
+                </div>
+                <div id="ratio" style="height: 328px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1683768491534"><div style="position: relative; overflow: hidden; width: 351px; height: 328px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="351" height="290" style="position: absolute; left: 0px; top: 0px; width: 351px; height: 328px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+                <span class="top-left border-span"></span>
+                <span class="top-right border-span"></span>
+                <span class="bottom-left border-span"></span>
+                <span class="bottom-right border-span"></span>
+            </div>
+        </div>
+    </div>
+
+</div>
+          </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    var liElements = document.querySelectorAll('.topbnt_left li,.topbnt_right li, .modal li');
+liElements.forEach(function(liElement) {
+    liElement.addEventListener('mouseover', function() {
+        this.classList.add('active');
+    });
+    liElement.addEventListener('mouseout', function() {
+        this.classList.remove('active');
+    });
+});
+</script>
+<script type="text/javascript">
+    function numInit() {
+    $('.scrollnum').each(function(){
+      $(this).prop('Counter',0).animate({
+        Counter: $(this).text()
+      },{
+        duration: 500,
+        easing: 'swing',
+        step: function (now){
+          $(this).text(now.toFixed(0));
+        }
+      });
+    });}
+    function changeObj(mark){
+  filter_data=all_data.filter(function (e){return e.object===mark;})
+        rpl_data=filter_data.filter(function (e){return e.state==='已办理';}).sort(sortrplTime)
+  initData()
+  {#for(i=0;i<10;i++){#}
+  {#  document.getElementById("title"+i.toString()).innerHTML = filter_data[i].title;#}
+  {#document.getElementById("title"+i.toString()).setAttribute('title',filter_data[i].msgcontent);#}
+  {#document.getElementById("title0"+i.toString()).innerHTML = rpl_data[i].title;#}
+  {#document.getElementById("title0"+i.toString()).setAttribute('title',rpl_data[i].msgcontent);#}
+  {#document.getElementById("type"+i.toString()).innerHTML = filter_data[i].type;#}
+  {#document.getElementById("type"+i.toString()).setAttribute('title',filter_data[i].type);#}
+  {#document.getElementById("domain"+i.toString()).innerHTML = filter_data[i].domain;#}
+  {#document.getElementById("domain"+i.toString()).setAttribute('title',filter_data[i].domain);#}
+  {#document.getElementById("state"+i.toString()).innerHTML = filter_data[i].state;#}
+  {#document.getElementById("state"+i.toString()).setAttribute('title',filter_data[i].state);#}
+  {#switch (filter_data[i].state){#}
+  {#  case '已办理':#}
+  {#    document.getElementById("state"+i.toString()).setAttribute('class','badge badge-md badge-success');#}
+  {#    break;#}
+  {#  case '办理中':#}
+  {#    document.getElementById("state"+i.toString()).setAttribute('class','badge badge-md badge-warning');#}
+  {#    break;#}
+  {#  case '待回复':#}
+  {#    document.getElementById("state"+i.toString()).setAttribute('class','badge badge-md badge-secondary');#}
+  {#    break;#}
+  {#}#}
+  {#document.getElementById("object"+i.toString()).innerHTML = filter_data[i].object;#}
+  {#document.getElementById("object"+i.toString()).setAttribute('title',filter_data[i].object);#}
+  {#document.getElementById("senti"+i.toString()).innerHTML = filter_data[i].senti;#}
+  {#document.getElementById("senti"+i.toString()).setAttribute('title',filter_data[i].senti);#}
+  {#switch (filter_data[i].senti){#}
+  {#  case '正':#}
+  {#    document.getElementById("senti"+i.toString()).setAttribute('class','badge badge-sm badge-success');#}
+  {#    break;#}
+  {#  case '中':#}
+  {#    document.getElementById("senti"+i.toString()).setAttribute('class','badge badge-sm badge-warning');#}
+  {#    break;#}
+  {#  case '负':#}
+  {#    document.getElementById("senti"+i.toString()).setAttribute('class','badge badge-sm badge-danger');#}
+  {#    break;#}
+  {#}#}
+  {#document.getElementById("msgmod"+i.toString()).innerHTML = filter_data[i].msg_mods;#}
+  {#document.getElementById("msgmod"+i.toString()).setAttribute('title',filter_data[i].msg_mods);#}
+  {#document.getElementById("msgtime"+i.toString()).innerHTML =new Date(filter_data[i].msgtime).toLocaleDateString('zh-CN',{year: 'numeric', month: 'long', day: 'numeric'})+new Date(filter_data[i].msgtime).toLocaleTimeString('zh-CN');#}
+  {#document.getElementById("msgtime"+i.toString()).setAttribute('title',new Date(filter_data[i].msgtime).toLocaleDateString('zh-CN',{year: 'numeric', month: 'long', day: 'numeric'})+new Date(filter_data[i].msgtime).toLocaleTimeString('zh-CN'));#}
+  {#document.getElementById("rplcontent"+i.toString()).innerHTML = rpl_data[i].rplcontent;#}
+  {#document.getElementById("rplcontent"+i.toString()).setAttribute('title',rpl_data[i].rplcontent);#}
+  {#document.getElementById("rplorg"+i.toString()).innerHTML = rpl_data[i].rplorg;#}
+  {#document.getElementById("rplorg"+i.toString()).setAttribute('title',rpl_data[i].rplorg);#}
+  {#document.getElementById("rpl_mods"+i.toString()).innerHTML = rpl_data[i].rpl_mods;#}
+  {#document.getElementById("rpl_mods"+i.toString()).setAttribute('title',rpl_data[i].rpl_mods);#}
+  {#switch (rpl_data[i].rpl_mods){#}
+  {#  case '共情话语':#}
+  {#    document.getElementById("rpl_mods"+i.toString()).setAttribute('class','badge badge-sm badge-danger');#}
+  {#    break;#}
+  {#  case '描述话语':#}
+  {#    document.getElementById("rpl_mods"+i.toString()).setAttribute('class','badge badge-sm badge-warning');#}
+  {#    break;#}
+  {#  case '规则话语':#}
+  {#    document.getElementById("rpl_mods"+i.toString()).setAttribute('class','badge badge-sm badge-info');#}
+  {#    break;#}
+  {#}#}
+  {#document.getElementById("rpl_atts"+i.toString()).innerHTML = rpl_data[i].rpl_atts;#}
+  {#document.getElementById("rpl_atts"+i.toString()).setAttribute('title',rpl_data[i].rpl_atts);#}
+  {#document.getElementById("rpltime"+i.toString()).innerHTML =new Date(rpl_data[i].rpltime).toLocaleDateString('zh-CN',{year: 'numeric', month: 'long', day: 'numeric'})+new Date(rpl_data[i].rpltime).toLocaleTimeString('zh-CN');#}
+  {#document.getElementById("rpltime"+i.toString()).setAttribute('title',new Date(rpl_data[i].rpltime).toLocaleDateString('zh-CN',{year: 'numeric', month: 'long', day: 'numeric'})+new Date(rpl_data[i].rpltime).toLocaleTimeString('zh-CN'));#}
+  {#}#}
+  {#md.initDashboardPageCharts();#}
+}
+function initTable(){
+
+      ing_data=filter_data.filter(function (e){return e.state==='办理中';})
+      un_data=filter_data.filter(function (e){return e.state==='待回复';})
+      // 获取要显示数据的元素
+    labels=['就业','城建','教育','交通','企业']
+    for (i=1;i<6;i++){
+        document.getElementById('rn'+i.toString()).textContent = rpl_data.filter(function (e){return e.domain===labels[i-1];}).length;
+        document.getElementById('in'+i.toString()).textContent = ing_data.filter(function (e){return e.domain===labels[i-1];}).length;
+        document.getElementById('tn'+i.toString()).textContent = un_data.filter(function (e){return e.domain===labels[i-1];}).length;
+    }
+}
+    function sortTime(a,b){
+    return b.msgtime-a.msgtime;
+}
+function sortrplTime(a,b){
+    return b.rpltime-a.rpltime;
+}
+    $.ajaxSetup({async :false });
+$.ajax({
+  type:"GET",
+  url:'/get_all/',
+  dataType:'json',
+  success:function (data){
+    all_data=JSON.parse(data)
+      filter_data=all_data.sort(sortTime)
+      rpl_data=filter_data.filter(function (e){return e.state==='已办理';}).sort(sortrplTime)
+      initTable();
+  }
+});
+</script>
+<script src="/static/assets/js/domain.js"></script>
+<script type="text/javascript">
+    document.getElementById('city-select').addEventListener('change', function() {
+  // 获取选中的值
+  var selectedValue = this.value;
+    const links = document.querySelectorAll('a');
+    links.forEach(link => {
+            const href = link.getAttribute('href');
+            const newHref = href.replace(/city=[^&]*/, `city=${selectedValue}`);
+            link.setAttribute('href', newHref);
+        });
+  // 根据选中的值更新地图
+    filter_data=all_data.filter(function (e){return e.city===selectedValue;});
+    rpl_data=filter_data.filter(function (e){return e.state==='已办理';})
+    ratio();
+    amount();
+    emotion();
+    initTable();
+});
+
+</script>
+</body>
+</html>

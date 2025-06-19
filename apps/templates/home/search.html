@@ -1,0 +1,647 @@
+<!doctype html>
+
+<meta charset="utf-8">
+<title>政务新媒体互动内容分析及摘要生成系统</title>
+{#<link href="/static/assets/css/style.css"  rel="stylesheet" type="text/css" media="all" />#}
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+<script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+<link href="/static/assets/css/fq.css"  rel="stylesheet" type="text/css" media="all" />
+<script src="/static/assets/js/echarts.min.js" charset="utf-8"></script>
+<script src="/static/assets/js/jquery-3.2.0.min.js" charset="utf-8"></script>
+{#<script src="/static/assets/js/material-dashboard.js"></script>#}
+
+<link href="/static/assets/css/roundicon.css" rel="stylesheet">
+<script src="/static/assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="/static/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+{#<link href="/static/assets/css/leaflet.css" rel="stylesheet" />#}
+{#<script src="/static/assets/js/leaflet.js" charset="utf-8"></script>#}
+<link href="/static/assets/css/material-kit.min.css" rel="stylesheet" />
+<style>
+            .page-header {
+                position: relative;
+                min-height: 100vh;
+            }
+
+            .page-header::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url('/static/assets/img/bg4.png');
+                opacity: 0.5;
+                z-index: -1;
+            }
+        </style>
+<style>
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #8c8c8c;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        animation: spin 1s linear infinite;
+    }
+</style>
+
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=1.0&type=webgl&ak=Dep6KGYkZfhYTHwktGtGdRDKDFmjYQ9z"></script>
+<body style="overflow: auto;">
+<div class="mouseCursor cursor-outer" style="visibility: visible; transform: translate(1173px, 181px);"></div>
+
+{#<div class="bnt">#}
+{#  <div class="topbnt_left fl">#}
+{#   <ul><li class="active"><a href="/traffic.html">图表</a></li>#}
+{#      <li><a href="/table.html">表格</a></li>#}
+{#        <li><a href="/org.html">部门画像</a></li>#}
+{#   </ul>#}
+{#  </div>#}
+{#  <h1 class="tith1 fl techno-font">政务互动内容分析平台</h1>#}
+{##}
+{#</div>#}
+<!-- bnt end -->
+
+<nav class="navbar navbar-expand-lg  blur border-radius-xl top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
+<div class="container-fluid px-0">
+{#<a class="navbar-brand font-weight-bolder ms-sm-3  d-none d-md-block" href="../" rel="tooltip" title="Designed and Coded by Creative Tim" data-placement="bottom" target="_blank">#}
+{#政务新媒体互动内容分析及摘要生成系统#}
+{#</a>#}
+{#<a class="navbar-brand font-weight-bolder ms-sm-3  d-block d-md-none" href="../" rel="tooltip" title="Designed and Coded by Creative Tim" data-placement="bottom" target="_blank">#}
+{#政务互动内容分析及摘要生成系统#}
+{#</a>#}
+<button class="navbar-toggler shadow-none ms-md-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon mt-2">
+<span class="navbar-toggler-bar bar1"></span>
+<span class="navbar-toggler-bar bar2"></span>
+<span class="navbar-toggler-bar bar3"></span>
+</span>
+</button>
+<div class="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0" id="navigation">
+<ul class="navbar-nav navbar-nav-hover ms-auto">
+{#    <li class="nav-item dropdown dropdown-hover mx-2">#}
+{#<a role="button" class="nav-link ps-2 d-flex cursor-pointer align-items-center" id="dropdownMenuPages" data-bs-toggle="dropdown" aria-expanded="false">#}
+{#<i class="material-icons opacity-6 me-2 text-md">dashboard</i>#}
+{#Pages#}
+{#<img src=" /static/assets/img/down-arrow-dark.svg  " alt="down-arrow" class="arrow ms-2 d-lg-block d-none">#}
+{#<img src="/static/assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-1 d-lg-none d-block ms-auto">#}
+{#</a>#}
+{#<div class="dropdown-menu dropdown-menu-animation ms-n3 dropdown-xl p-3 border-radius-xl mt-0 mt-lg-3" aria-labelledby="dropdownMenuPages">#}
+{#<div class="row d-none d-lg-block">#}
+{#<div class="col-12 px-4 py-2">#}
+{#<div class="row">#}
+{#<div class="col-4 position-relative">#}
+{#<div class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-1">#}
+{#Landing Pages#}
+{#</div>#}
+{#<a href="./pages/coworking.html" class="dropdown-item border-radius-md">#}
+{#<span>Coworking</span>#}
+{#</a>#}
+{#<a href="./pages/rental.html" class="dropdown-item border-radius-md">#}
+{#<span>Rental</span>#}
+{#</a>#}
+{#<a href="./pages/case-study.html" class="dropdown-item border-radius-md">#}
+{#<span>Case Study</span>#}
+{#</a>#}
+{#</div>#}
+{#</div>#}
+{#</div>#}
+{#</div>#}
+{#</div>#}
+{#</li>#}
+<li class="nav-item mx-2">
+<a role="button" href="../" class="nav-link ps-2 d-flex cursor-pointer align-items-center">
+<i class="material-icons opacity-6 me-2 text-md">home</i>
+主页
+</a>
+
+</li>
+<li class="nav-item mx-2">
+<a role="button" href="/domain.html" class="nav-link ps-2 d-flex cursor-pointer align-items-center">
+<i class="material-icons opacity-6 me-2 text-md">dashboard</i>
+民生数据分析
+</a>
+</li>
+<li class="nav-item mx-2">
+<a role="button" href="/map.html" class="nav-link ps-2 d-flex cursor-pointer align-items-center">
+<i class="material-icons opacity-6 me-2 text-md">table_chart</i>
+辖区数据查询
+</a>
+</li>
+<li class="nav-item mx-2">
+<a role="button" href="/search/" class="nav-link ps-2 d-flex cursor-pointer align-items-center">
+<i class="material-icons opacity-6 me-2 text-md">table_chart</i>
+民众留言查看
+</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<div class="page-header min-vh-100" >
+    <div class="col" style="width: 100%;">
+        <section class="">
+
+<div class="container" style="margin-top: 150px;margin-bottom: 50px;" id="search">
+
+                <form action="" class="parent" style="text-align: center">
+                    <label style="width: 100%;position: relative">
+                        <div class="dropdown" style="display: inline-block!important;">
+            <button class="btn bg-white dropdown-toggle" style="margin-bottom: 0" type="button" id="dropdownMenuButton0" data-bs-toggle="dropdown" aria-expanded="false">
+              地区
+            </button>
+            <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton0">
+    <li>
+      <a class="dropdown-item border-radius-md" href="?city=武汉">武汉</a>
+    </li>
+                <li>
+      <a class="dropdown-item border-radius-md" href="?city=郑州">郑州</a>
+    </li>
+                <li>
+      <a class="dropdown-item border-radius-md" href="?city=长沙">长沙</a>
+    </li>
+                <li>
+      <a class="dropdown-item border-radius-md" href="?city=南昌">南昌</a>
+    </li>
+      </ul>
+          </div>
+                        <input id="query" type="text" class="search" placeholder="{{ query }}" style="background-color: #ffffff">
+                        <input type="button" onclick="Query()" class="btn1" id="btn1" style="top: 5px;right: 26%">
+                        <!--                        <input type="button" id="btn1" style="width: 100px;height: 100px;border: 1px solid red;">-->
+                    </label>
+                </form>
+            </div>
+
+          <div class="table-responsive" style="border-radius: 10px;padding-top:50px;background-color: #f7f8fa;width: 80%; margin: 0 10%;">
+
+              {% for record in Page %}
+                  <table class="table table-kingdargen" style="width: 90%; margin: 0 5%; display: block;
+    border-bottom: 1px solid #e6e6e6;">
+                <tbody  style="max-width: 100%;">
+                <tr style="height: 40px">
+                    <td><span style="font-weight: bold">留言对象：</span>{{ record.object }}<br>
+                        <h3 style="margin-right:14px;font-weight: 1000;display: inline">{{ record.title }}</h3><p style="background: rgba(119,158,193,.1);color: #6c7e97;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;">{{ record.type }}</p><p style="background: #effdfa;
+    color: #467cc6;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;">{{ record.domain }}</p><p style="background: rgba(214,49,63,.1);
+    color: #d6313f;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;">{{ record.state }}</p><p style="background: rgba(214,167,49,0.1);
+    color: #d5732c;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;">{{ record.senti }}</p><p style="background: rgba(49,214,96,0.1);
+    color: #31d69c;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;">{{ record.msg_mods }}</p><button style="width: 80px;
+    padding: 0;
+    border-radius: 14px;
+    color: #fff;
+    background-color: #19acff;
+    border-color: #1984ff;" onclick="addRow(this,'{{ record.sum }}')">摘要生成</button><br><br>
+                    <span style="color: #8c8c8c;margin-right: 14px">{{ record.msgtime|date:"Y年m月d日 H:i:s" }}</span>
+                    </td>
+                </tr>
+                <tr style="display:none;"><td colspan="2" style="white-space: pre-wrap;"><span style="display: inline-block;"><div style="display: inline-block;" class="spinner"></div> 生成中...</span></td></tr>
+                <tr>
+                    <td colspan="2" style="white-space: pre-wrap;"><span>{{ record.mark|safe }}</span>
+                    </td>
+                </tr>
+                {% if record.rplorg %}
+                <tr>
+                    <td><img style="float: left" src="/static/assets/img/head.png"><div style="display: inherit"><span style="margin-left:8px;font-weight: bold;margin-right: 14px;">{{ record.rplorg }}</span>{% if record.reply_time_diff == -1 %}<p style="background: rgba(119,158,193,.1);color: #6c7e97;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;">15天后回复</p>{% elif record.reply_time_diff == 0 %}<p style="background: rgba(119,158,193,.1);color: #6c7e97;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;">7-15天内回复</p>{% elif record.reply_time_diff == 1 %}<p style="background: rgba(119,158,193,.1);color: #6c7e97;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;">7天内回复</p>{% endif %}<p style="background: #effdfa;
+    color: #467cc6;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;">{{ record.rpl_atts }}</p><p style="background: rgba(214,49,63,.1);
+    color: #d6313f;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;">{{ record.rpl_mods }}</p><br><span style="margin-left:8px;color: #8c8c8c;margin-right: 14px">{{ record.rpltime|date:"Y年m月d日 H:i:s" }}</span><br><p style="margin-left:8px;">{{ record.rplcontent }}</p></div>
+
+
+                    </td>
+                </tr>
+                {% endif %}
+{#                <tr>#}
+{#                    <td colspan="2" style="white-space: pre-wrap;"><span>回复内容：{{ record.rplcontent }}</span><br>#}
+{##}
+{#                        <span style="float: right">{{ record.rplorg }}</span><br>#}
+{#                        <span style="float: right">{{ record.rpltime }}</span>#}
+{#                    </td>#}
+{#                </tr>#}
+                </tbody>
+            </table>
+                {% endfor %}
+
+
+          </div>
+<div class="row justify-space-between py-2" style="background-color: #f7f8fa;
+    margin: 0 10%;">
+            <div class="col-lg-12 mx-auto">
+            <ul class="pagination pagination-info m-4 justify-content-center" style="display: flex;flex-wrap: wrap">
+
+                {% if Page.has_previous %}
+            <li class="page-item" style="width: 40px;">
+                    <a class="page-link" href="?page={{ Page.previous_page_number }}&query={{ query }}&city={{ city }}" aria-label="Previous">
+                        <span aria-hidden="true"><i style="width: 36px;" class="material-icons-round" aria-hidden="true">chevron_left_rounded</i></span>
+                    </a>
+                {% endif %}
+            </li>
+            <li>
+                {% if ifEllipsis == 1 %}
+                    {% if Page.number >= 1 and Page.number <= 6 %}
+                        {% for i in range1 %}
+                            {% if i >= 1 and i <= 6 %}
+                                <li {% if Page.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ i }}&query={{ query }}&city={{ city }}">{{ i }}</a>
+                                </li>
+                            {% elif i == 8 %}
+                                <li {% if Page.number == Page.paginator.num_pages %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ Page.paginator.num_pages }}&query={{ query }}&city={{ city }}">{{ Page.paginator.num_pages }}</a>
+                                </li>
+                            {% elif i == 7 %}
+                                <li class="page-item">
+                                    <a class="page-link">...</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif Page.number == Page.paginator.num_pages %}
+                        {% for i in range1 %}
+                            {% if i >= 1 and i <= 6 %}
+                                <li {% if Page.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ i }}&query={{ query }}&city={{ city }}">{{ i }}</a>
+                                </li>
+                            {% elif i == 8 %}
+                                <li {% if Page.number == Page.paginator.num_pages %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ Page.paginator.num_pages }}&query={{ query }}&city={{ city }}">{{ Page.paginator.num_pages }}</a>
+                                </li>
+                            {% elif i == 7 %}
+                                <li class="page-item">
+                                    <a class="page-link">...</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif Page.number == 7 %}
+                        {% for i in range3 %}
+                            {% if i >= 1 and i <= 6 %}
+                                <li {% if Page.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ i }}&query={{ query }}&city={{ city }}">{{ i }}</a>
+                                </li>
+                            {% elif i == 9 %}
+                                <li {% if Page.number == Page.paginator.num_pages %} class="page-item active" {% else %} class="page-item"{% endif %}>
+                                    <a class="page-link" href="?page={{ Page.paginator.num_pages }}&query={{ query }}&city={{ city }}">{{ Page.paginator.num_pages }}</a>
+                                </li>
+                            {% elif i == 7 %}
+                                <li {% if Page.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ i }}&query={{ query }}&city={{ city }}">{{ i }}</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item">
+                                    <a class="page-link">...</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif Page.number == lastButOne  %}
+                        {% for i in range3 %}
+                            {% if i >= 1 and i <= 6 %}
+                                <li {% if Page.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ i }}&query={{ query }}&city={{ city }}">{{ i }}</a>
+                                </li>
+                            {% elif i == 9 %}
+                                <li {% if Page.number == Page.paginator.num_pages %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ Page.paginator.num_pages }}&query={{ query }}&city={{ city }}">{{ Page.paginator.num_pages }}</a>
+                                </li>
+                            {% elif i == 8 %}
+                                <li {% if Page.number == lastButOne %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ lastButOne }}&query={{ query }}&city={{ city }}">{{ lastButOne }}</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item">
+                                    <a class="page-link">...</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% elif Page.number > 7 and Page.number < lastButOne %}
+                        {% for i in range2 %}
+                            {% if i >= 1 and i <= 6 %}
+                                <li {% if Page.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ i }}&query={{ query }}&city={{ city }}">{{ i }}</a>
+                                </li>
+                            {% elif i == 7 %}
+                                <li class="page-item">
+                                    <a class="page-link">...</a>
+                                </li>
+                            {% elif i == 8 %}
+                                <li class="page-item active">
+                                    <a class="page-link" href="?page={{ Page.number }}&query={{ query }}&city={{ city }}">{{ Page.number }}</a>
+                                </li>
+                            {% elif i == 9 %}
+                                <li class="page-item">
+                                    <a class="page-link">...</a>
+                                </li>
+                            {% elif i == 10 %}
+                                <li {% if Page.number == Page.paginator.num_pages %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                                    <a class="page-link" href="?page={{ Page.paginator.num_pages }}&query={{ query }}&city={{ city }}">{{ Page.paginator.num_pages }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% elif ifEllipsis == 0 %}
+                    {% for i in Page.paginator.page_range %}
+                        <li {% if Page.number == i %} class="page-item active" {% else %} class="page-item" {% endif %}>
+                            <a class="page-link" href="?page={{ i }}&query={{ query }}&city={{ city }}">{{ i }}</a>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+            </li>
+            <li class="page-item" style="width: 40px;">
+                {% if Page.has_next %}
+                    <a class="page-link" href="?page={{ Page.next_page_number }}&query={{ query }}&city={{ city }}" aria-label="Next">
+                        <span aria-hidden="true"><i style="width: 36px;" class="material-icons-round" aria-hidden="true">chevron_right_rounded</i></span>
+                    </a>
+                {% endif %}
+            </li>
+            <li class="input-group text-md" style="display: flex;width: 100px"><a class="text-md" style="flex: none; display:flex;align-items: center">跳转至</a><input id="pageNum" placeholder="{{ Page.number }}" class="form-control d-inline-block" style="background-color: white;width: 1px">
+                <a class="text-md" style="flex: none;display: flex;align-items: center">页</a></li>
+                <li style="display:inline;width: 40px;" class="page-item">
+                <a class="page-link" onclick="getPage();"><span aria-label="true"><i style="width: 36px;" class="material-icons-round" aria-hidden="true">reply_rounded</i></span>
+                </a>
+            </li>
+            </ul>
+        </div>
+        </div>
+
+
+
+
+</section>
+
+    </div>
+
+
+
+
+
+<!--  left1 end -->
+
+            <!--  amiddboxttop end-->
+
+            <!-- amidd_bott end -->
+
+        <!-- mrbox_top end -->
+
+        <!-- mrbox_top_right end -->
+
+
+</div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    document.getElementById('query').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        Query();
+    }
+});
+</script>
+<script type="text/javascript">
+    var liElements = document.querySelectorAll('.topbnt_left li, .modal li');
+liElements.forEach(function(liElement) {
+    liElement.addEventListener('mouseover', function() {
+        this.classList.add('active');
+    });
+    liElement.addEventListener('mouseout', function() {
+        this.classList.remove('active');
+    });
+});
+</script>
+<script type="text/javascript">
+var checkInterval = setInterval(function() {
+    function ciyun(str){
+        console.log(str)
+        var words = str.split(" ").map(function(word) {
+    return {text: word, size: 15 + Math.random() * 10};
+});
+
+var width = 300;
+var height = 100;
+
+var layout = d3.layout.cloud()
+    .size([width, height])
+    .words(words)
+    .padding(5)
+    .rotate(function() { return ~~(Math.random() * 2) * 90; })
+    .font("Impact")
+    .fontSize(function(d) { return d.size; })
+    .on("end", draw);
+
+layout.start();
+
+function draw(words) {
+    var canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, width, height);
+
+    var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+    words.forEach(function(word) {
+        ctx.save();
+        ctx.translate(word.x + width / 2, word.y + height / 2);
+        ctx.rotate(word.rotate * Math.PI / 180);
+        ctx.textAlign = "center";
+        ctx.fillStyle = color(word.text);
+        ctx.font = word.size + "px " + word.font;
+        ctx.fillText(word.text, 0, 0);
+        ctx.restore();
+    });
+
+    var img = document.createElement("img");
+    img.src = canvas.toDataURL();
+
+    var ciyunDiv = document.getElementById("ciyun");
+    ciyunDiv.innerHTML = ""; // 清空div中的内容
+    ciyunDiv.appendChild(img);
+}
+    }
+</script>
+<script type="text/javascript">
+
+    function sortTime(a,b){
+    return b.msgtime-a.msgtime;
+}
+function sortrplTime(a,b){
+    return b.rpltime-a.rpltime;
+}
+</script>
+<script type="text/javascript">
+    function numInit() {
+    $('.scrollnum').each(function(){
+      $(this).prop('Counter',0).animate({
+        Counter: $(this).text()
+      },{
+        duration: 500,
+        easing: 'swing',
+        step: function (now){
+          $(this).text(now.toFixed(0));
+        }
+      });
+    });}
+
+</script>
+<script type="text/javascript">
+    function getPage(){
+            var pageNum = $('#pageNum').val();
+            if(pageNum>=1&&pageNum<={{ Page.paginator.num_pages }}){
+                location.assign("{% url 'search' %}?page="+pageNum+"&query={{ query }}&city={{ city }}")
+            }
+            else{
+                alert('请输入正确的页码')
+            }
+        }
+
+        function Query(){
+            queryt=$('#query').val();
+            if(queryt!==''){
+                location.assign("{% url 'search' %}?query="+queryt+"&city={{ city }}")
+                $("#table").load(location.href + " #table","");
+            }
+            else {
+                alert('输入关键词为空！')
+            }
+
+        }
+        let placehd='{{ query }}';
+    // Replace this with the actual value of query
+    let inputElement = document.getElementById('query');
+    if (placehd === 'None') {
+        inputElement.setAttribute('placeholder', '请输入关键词');
+    } else {
+        inputElement.setAttribute('placeholder', placehd);
+    }
+</script>
+<script type="text/javascript">
+    $(".slider-drag").on("mouseenter", function () {
+    $(".mouseCursor").addClass("cursor-big");
+});
+$(".slider-drag").on("mouseleave", function () {
+    $(".mouseCursor").removeClass("cursor-big");
+});
+
+$("a,.sub-menu,button").on("mouseenter", function () {
+    $(".mouseCursor").addClass("opacity-0");
+});
+$("a,.sub-menu,button").on("mouseleave", function () {
+    $(".mouseCursor").removeClass("opacity-0");
+});
+
+// Mouse Custom Cursor
+function itCursor() {
+    var myCursor = jQuery(".mouseCursor");
+    if (myCursor.length) {
+        if ($("body")) {
+            const e = document.querySelector(".cursor-inner"),
+            t = document.querySelector(".cursor-outer");
+            let n,
+            i = 0,
+            o = !1;
+            (window.onmousemove = function (s) {
+            o ||
+                (t.style.transform =
+                "translate(" + s.clientX + "px, " + s.clientY + "px)"),
+                {#(e.style.transform =#}
+                {#"translate(" + s.clientX + "px, " + s.clientY + "px)"),#}
+                (n = s.clientY),
+                (i = s.clientX);
+            }),
+            $("body").on("mouseenter", "button, a, .cursor-pointer", function () {
+                t.classList.add("cursor-hover");
+            }),
+            $("body").on("mouseleave", "button, a, .cursor-pointer", function () {
+                ($(this).is("a", "button") &&
+                $(this).closest(".cursor-pointer").length) ||
+                t.classList.remove("cursor-hover");
+            }),
+            {#(e.style.visibility = "visible"),#}
+            (t.style.visibility = "visible");
+        }
+    }
+}
+itCursor();
+
+</script>
+<script>
+    function addRow(button,text) {
+    var tr = button.closest('tr');
+    var newTr = tr.nextElementSibling;
+    if (newTr && newTr.querySelector('td[colspan="2"]')) {
+        // 如果已经有一个新的 tr 元素，则更新其内容
+        var newTd = newTr.querySelector('td');
+        newTr.setAttribute('style','display:');
+        newTd.innerHTML = '<span style="display: inline-block;"><div style="display: inline-block;" class="spinner"></div> 生成中...</span>';
+        setTimeout(function() {
+            newTd.innerHTML = '<span style="font-weight: bold">摘要：</span>'+text;
+        }, 2000);
+    }
+}
+</script>
+
+</body>
+</html>

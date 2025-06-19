@@ -1,0 +1,394 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+{#        <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>#}
+        <!-- Material Icons -->
+        <link href="/static/assets/css/roundicon.css" rel="stylesheet">
+        <link href="/static/assets/css/material-kit.min.css" rel="stylesheet" />
+<script src="/static/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+        <!-- -------- START HEADER 1 w/ text and image on right ------- -->
+     <title>
+    政务新媒体互动内容分析及摘要生成系统 | 主页
+  </title>
+<link href="/static/assets/css/fq.css" rel="stylesheet" type="text/css" media="all" >
+<script src="/static/assets/js/echarts.min.js" charset="utf-8"></script>
+<script src="/static/assets/js/jquery-3.2.0.min.js" charset="utf-8"></script>
+{#<script src="/static/assets/js/material-dashboard.js"></script>#}
+<style>
+            .page-header {
+                position: relative;
+                min-height: 100vh;
+            }
+
+            .page-header::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url('/static/assets/img/bg4.png');
+                opacity: 0.5;
+                z-index: -1;
+            }
+            /* 定义modal的样式 */
+.modal {
+  display: none; /* 默认不显示 */
+  position: fixed; /* 使用固定定位 */
+  z-index: 3; /* 在其他元素之上 */
+  left: 0;
+  top: 0;
+  width: 100%; /* 宽度为100% */
+  height: 100%; /* 高度为100% */
+  overflow: auto; /* 如果内容过多则出现滚动条 */
+  background-color: rgba(0,0,0,0.4); /* 背景颜色为半透明黑色 */
+}
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    width: 20px;
+}
+/* 定义modal内容的样式 */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 40px;
+  border: 1px solid #888;
+  width: 50%;
+    height: 50%;
+
+  /* 将元素水平和垂直居中 */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+    /* 自定义纵向滚动条的样式 */
+.modal-content::-webkit-scrollbar {
+  width: 10px; /* 设置滚动条宽度 */
+  border-radius: 5px; /* 设置滚动条圆角 */
+}
+
+/* 自定义滚动条轨道的样式 */
+.modal-content::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+/* 自定义滚动条滑块的样式 */
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 5px; /* 设置滑块圆角 */
+}
+
+/* 鼠标悬停在滑块上时改变其颜色 */
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+        </style>
+{#<link href="/static/assets/css/leaflet.css" rel="stylesheet" />#}
+{#<script src="/static/assets/js/leaflet.js" charset="utf-8"></script>#}
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=1.0&type=webgl&ak=Dep6KGYkZfhYTHwktGtGdRDKDFmjYQ9z"></script>
+<header>
+<nav class="navbar navbar-expand-lg  blur border-radius-xl top-0 z-index-3 shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
+<div class="container-fluid px-0">
+{#<a class="navbar-brand font-weight-bolder ms-sm-3  d-none d-md-block" href="../" rel="tooltip" title="政务互动内容分析及摘要生成系统" data-placement="bottom" target="_blank">#}
+{#政务新媒体互动内容分析及摘要生成系统#}
+{#</a>#}
+{#<a class="navbar-brand font-weight-bolder ms-sm-3  d-block d-md-none" href="../" rel="tooltip" title="政务互动内容分析及摘要生成系统" data-placement="bottom" target="_blank">#}
+{#政务互动内容分析及摘要生成系统#}
+{#</a>#}
+<button class="navbar-toggler shadow-none ms-md-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon mt-2">
+<span class="navbar-toggler-bar bar1"></span>
+<span class="navbar-toggler-bar bar2"></span>
+<span class="navbar-toggler-bar bar3"></span>
+</span>
+</button>
+<div class="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0" id="navigation">
+<ul class="navbar-nav navbar-nav-hover ms-auto">
+<li class="nav-item mx-2">
+<a role="button" href="../" class="nav-link ps-2 d-flex cursor-pointer align-items-center">
+<i class="material-icons opacity-6 me-2 text-md">home</i>
+主页
+</a>
+
+</li>
+    <li class="nav-item mx-2">
+<a role="button" href="/domain.html" class="nav-link ps-2 d-flex cursor-pointer align-items-center">
+<i class="material-icons opacity-6 me-2 text-md">dashboard</i>
+民生数据分析
+</a>
+</li>
+<li class="nav-item mx-2">
+<a role="button" href="/map.html" class="nav-link ps-2 d-flex cursor-pointer align-items-center">
+<i class="material-icons opacity-6 me-2 text-md">table_chart</i>
+辖区数据查询
+</a>
+</li>
+<li class="nav-item mx-2">
+<a role="button" href="/search/" class="nav-link ps-2 d-flex cursor-pointer align-items-center">
+<i class="material-icons opacity-6 me-2 text-md">dashboard</i>
+民众留言查看
+</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+    <!-- 定义modal元素 -->
+<div id="myModal" class="modal">
+  <div class="modal-content" style="overflow-y: scroll">
+    <span class="close">&times;</span>
+    <p style="font-size: 1.4rem">本页面可以通过三种方式：1.IP定位 2.地图选点 3.地址搜索</p><br>
+      <p style="font-size: 1.4rem">获取您需要的行政区划信息，以帮助您准确找到留言对象</p><br>
+      <p style="font-size: 1.4rem">定位准确后单击鼠标即可展示该区域对应的微博、网站、留言板、市长信箱等政务互动平台</p>
+  </div>
+</div>
+  <div class="page-header min-vh-100" >
+    <div class="container">
+      <div class="row">
+
+          <div class="searchbar" style="width: 80%;left: 10%;">
+                <form action="" class="parent">
+                    <label style="width: 100%;position: relative">
+                        <input type="button" title="帮助信息" class="btn1" id="myBtn" style="margin-top:20px;left: 26%;background-size: contain!important;background: url(static/assets/img/info.png) no-repeat;">
+                        <input id="query" type="text" class="search" placeholder="{{ query }}" style="padding-left:50px;margin-top: 30px;margin-left: 25%;background-color: #ffffff">
+                        <input type="button" onclick="Query()" class="btn1" id="btn1" style="margin-top:22px;right: 26%;">
+                        <!--                        <input type="button" id="btn1" style="width: 100px;height: 100px;border: 1px solid red;">-->
+                    </label>
+                </form>
+            </div>
+            <div id="map" style="height: 700px;margin-top: 50px"></div>
+        </div>
+      </div>
+  </div>
+</header>
+<script type="text/javascript">
+    document.getElementById('query').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        Query();
+    }
+});
+</script>
+<script type="text/javascript">
+$.get('/static/assets/js/wuhan.geojson', function (whJson) {
+    whJson = JSON.parse(whJson);
+     var gParse = new BMapGL.GeoJSONParse({
+        reference: 'GCJ02'
+    });
+    var colorBand = [ 'cadetblue', 'orange', 'red', 'tan'];
+        fs = gParse.readFeaturesFromObject(whJson, {
+            fillColor: 'red'
+        }, function (overlay) {
+            var index = overlay.properties.join || 0;
+            overlay.setFillColor(colorBand[index]);
+            overlay.setFillOpacity(0);
+            overlay.setStrokeOpacity(0);
+            overlay.setZIndex(-2);
+            overlay.addEventListener('onclick', popup);
+            map.addOverlay(overlay);
+        });
+    var polygons = [];
+for (var i = 0; i < whJson.features.length; i++) {
+    var feature = whJson.features[i];
+    if (feature.geometry.type === 'Polygon') {
+        var polygon = [];
+        for (var j = 0; j < feature.geometry.coordinates[0].length; j++) {
+            var coordinate = feature.geometry.coordinates[0][j];
+            var point = new BMapGL.Point(coordinate[0], coordinate[1]);
+            polygon.push(point);
+        }
+        polygons.push(polygon);
+    }
+    if (feature.geometry.type === 'MultiPolygon') {
+        var multiPolygon = [];
+        for (let i = 0; i < feature.geometry.coordinates.length; i++) {
+            let polygon = [];
+            for (let j = 0; j < feature.geometry.coordinates[i][0].length; j++) {
+                let coordinate = feature.geometry.coordinates[i][0][j];
+                let point = new BMapGL.Point(coordinate[0], coordinate[1]);
+                polygon.push(point);
+            }
+            multiPolygon.push(polygon);
+        }
+        polygons.push(multiPolygon);
+    }
+}
+map.addEventListener('click', function (e) {
+    var point = new BMapGL.Point(e.latlng.lng, e.latlng.lat);
+    {#var gc = new BMapGL.Geocoder();#}
+    {#gc.getLocation(point, function (rs) {#}
+    {#    var opts = {#}
+    {#        title: '行政区划归属',#}
+    {#        width: 220,#}
+    {#        height: 92#}
+    {#    };#}
+    {#    var infoStr = '<div>省：' + rs.addressComponents.province + '</div>'#}
+    {#                + '<div>市：' + rs.addressComponents.city + '</div>'#}
+    {#                + '<div>区：' + rs.addressComponents.district + '</div>';#}
+    {#    var infoWindow = new BMapGL.InfoWindow(infoStr, opts);#}
+    {#    map.openInfoWindow(infoWindow, point);#}
+
+    {#    for (var i = 0; i < polygons.length; i++) {#}
+    {#    if (isPointInPolygon(point, polygons[i])) {#}
+    {#        // 点击位置位于第i个多边形内#}
+    {#        // 在这里添加您的代码来显示相应的信息,留言网站链接等等#}
+    {#        alert('您选择的定位属于' + i+'区管辖');#}
+    {#        break;#}
+    {#    }#}
+
+});
+}
+);
+    function isPointInPolygon(point, polygon) {
+    if (Array.isArray(polygon[0])) {
+        // Handle MultiPolygon
+        for (let i = 0; i < polygon.length; i++) {
+            if (isPointInPolygon(point, polygon[i])) {
+                return true;
+            }
+        }
+        return false;
+    } else {
+        // Handle single Polygon
+        var crossings = 0;
+        for (var i = 0; i < polygon.length; i++) {
+            var a = polygon[i];
+            var j = i + 1;
+            if (j >= polygon.length) {
+                j = 0;
+            }
+            var b = polygon[j];
+            if ((a.lat > point.lat) != (b.lat > point.lat)) {
+                var x = (b.lng - a.lng) * (point.lat - a.lat) / (b.lat - a.lat) + a.lng;
+                if (point.lng < x) {
+                    crossings++;
+                }
+            }
+        }
+        return (crossings % 2 == 1);
+    }
+}
+    var map = new BMapGL.Map("map");
+map.centerAndZoom(new BMapGL.Point(114.404, 31.915), 11);
+map.enableScrollWheelZoom(true);
+var geolocation = new BMapGL.Geolocation();
+geolocation.getCurrentPosition(function(r) {
+    if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+        var mk = new BMapGL.Marker(r.point);
+        map.addOverlay(mk);
+        map.panTo(r.point);
+        for (var i = 0; i < fs.length; i++) {
+      var feature = fs[i];
+      // Check if the feature is a polygon and if it contains the user's location
+      if (feature instanceof BMapGL.Polygon && feature.getBounds().containsPoint(r.point)) {
+        // Display the name of the polygon
+        var opts = {
+          width: 200,
+          height: 100,
+        };
+        var infoWindow = new BMapGL.InfoWindow(feature.properties.name, opts);
+        map.openInfoWindow(infoWindow, r.point);
+        break;
+      }
+    }
+    } else {
+        alert('failed' + this.getStatus());
+    }
+});
+ var label = new BMapGL.Label();
+    label.setStyle({
+        color: 'blue',
+        borderRadius: '5px',
+        borderColor: '#ccc',
+        padding: '10px',
+        fontSize: '16px',
+        fontFamily: '微软雅黑',
+        transform: 'translateX(-50%) translateY(calc(-100% - 10px))'
+    });
+
+
+ function popup(e) {
+        var orgs = {{ org|safe }};
+
+        if (e.target) {
+            label.setPosition(e.latLng);
+            var targetOrg = orgs.find(function (org){
+                return org.org===e.target.properties.name;
+            });
+            label.addEventListener('click', function(e) {
+    e.stopPropagation();
+    // your code to open the webpage
+});
+            label.setContent('<h4 style='+'margin:0 0 5px 0;' +'>您所属的行政区划为：'+ e.target.properties.name + '<p style='+ 'margin:0;line-height:1.5;font-size:15px;text-indent:2em'+
+                '> 互动交流平台：<br><a class="weibo" target="_blank" onclick='+targetOrg.weibo+' href='+targetOrg.weibo+'><img onclick='+targetOrg.weibo+' src="/static/assets/img/weibo-grey.png" width="100" height="100"></a><a class="web" target="_blank" href='+targetOrg.web+'><img src="/static/assets/img/web-grey.png" width="100" height="100"></a><a class="mail" target="_blank" href='+targetOrg.mail+'><img src="/static/assets/img/mail-grey.png" width="100" height="100"></a><a class="citybd" target="_blank" href='+targetOrg.citybd+'><img src="/static/assets/img/citybd-grey.png" width="100" height="100"></a><a class="rmwbd" target="_blank" href='+targetOrg.rmwbd+'><img src="/static/assets/img/rmwbd-grey.png" width="100" height="100"></a>'  + '</p></div'
+                );
+            map.addOverlay(label);
+        }
+    }
+
+ function Query(){
+
+     queryt=$('#query').val();
+        {#map.centerAndZoom(new BMapGL.Point(116.331398,39.897445), 12);#}
+        //创建地址解析器实例
+        var myGeo = new BMapGL.Geocoder();
+        // 将地址解析结果显示在地图上，并调整地图视野
+        myGeo.getPoint(queryt, function(point) {
+    if (point) {
+        map.centerAndZoom(point, 16);
+        var marker = new BMapGL.Marker(point, {
+            title: queryt
+        });
+        map.addOverlay(marker);
+        var opts = {
+            width: 200,
+            height: 100,
+            title: queryt
+        };
+        {#var infoWindow = new BMapGL.InfoWindow('这里是地点的具体信息', opts);#}
+        myGeo.getLocation(point, function(result) {
+    if (result) {
+        var address = result.addressComponents;
+        var detailedAddress = address.province + ", " + address.city + ", " + address.district + ", " + address.street;
+        var infoWindow = new BMapGL.InfoWindow(detailedAddress, opts);
+        map.openInfoWindow(infoWindow, point);
+    }
+});
+            {#map.openInfoWindow(infoWindow, point);#}
+
+    } else {
+        alert('您选择的地址没有解析到结果！');
+    }
+}, '武汉市');
+        }
+</script>
+<script>
+// 获取modal元素
+var modal = document.getElementById("myModal");
+
+// 获取图标元素
+var btn = document.getElementById("myBtn");
+
+// 获取关闭按钮元素
+var span = document.getElementsByClassName("close")[0];
+
+// 当用户点击图标时，显示modal
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// 当用户点击关闭按钮时，关闭modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// 当用户点击modal以外的区域时，关闭modal
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>

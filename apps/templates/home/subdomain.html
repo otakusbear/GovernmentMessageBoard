@@ -1,0 +1,295 @@
+<!doctype html>
+
+<meta charset="utf-8">
+<title>政务新媒体互动内容分析及摘要生成系统</title>
+<link href="/static/assets/css/style.css"  rel="stylesheet" type="text/css" media="all" />
+<link href="/static/assets/css/recommend.css"  rel="stylesheet" type="text/css" media="all" />
+<link href="/static/assets/css/comment.css"  rel="stylesheet" type="text/css" media="all" />
+<link href="/static/assets/css/build.css"  rel="stylesheet" type="text/css" media="all" />
+<script src="/static/assets/js/echarts.min.js" charset="utf-8"></script>
+<script src="/static/assets/js/jquery-3.2.0.min.js" charset="utf-8"></script>
+{#<script src="/static/assets/js/material-dashboard.js"></script>#}
+
+{#<script src="/static/assets/js/map.js"></script>#}
+
+<body>
+<div class="wpbox" style="overflow: auto">
+<div class="bnt">
+  <div class="topbnt_left fl" style="padding-top: 1%;">
+   <ul><a href="/traffic.html">
+            <button class="button type2" style="margin: 0 0.5em;padding: 0.4em 1em;">图表模式</button>
+        </a>
+      <a href="/table.html">
+            <button class="button type2" style="margin: 0 0.5em;padding: 0.4em 1em;">表格模式</button>
+        </a>
+    <a href="/corpus/">
+            <button class="button type2" style="margin: 0 0.5em;padding: 0.4em 1em;">语料库</button>
+        </a>
+   </ul>
+  </div>
+  <h1 class="tith1 fl" style="color: #0d47a1">政务新媒体互动内容分析及摘要生成系统</h1>
+  <div class=" fr topbnt_right" style="padding-top: 1%;">
+    <ul>
+<a href="/domain.html">
+            <button class="button type2" style="margin: 0 0.5em;padding: 0.4em 1em;">民生数据分析</button>
+        </a>
+      <a href="/map.html">
+            <button class="button type2" style="margin: 0 0.5em;padding: 0.4em 1em;">辖区数据查询</button>
+        </a>
+        <a href="/search/">
+            <button class="button type2" style="margin: 0 0.5em;padding: 0.4em 1em;">民众留言查看</button>
+        </a>
+    </ul>
+   </ul>
+  </div>
+</div>
+<!-- bnt end -->
+<div class="main clearfix">
+        <div class="main-full" style="text-align: center; font-weight: bold">
+            <select id="city-select" style="z-index: 10;height: 40.38px;
+    width: 90px;
+    margin: 0.8em 0.8em;border-radius: 5px">
+    <option value="" disabled selected>选择城市</option>
+    <option value="武汉">武汉</option>
+  <option value="长沙">长沙</option>
+  <option value="郑州">郑州</option>
+  <option value="南昌">南昌</option>
+</select>
+        <a>
+            <button class="button type1" onclick="changeDomain('城建')">城建</button>
+        </a>
+        <a>
+            <button class="button type1" onclick="changeDomain('教育')">教育</button>
+        </a>
+        <a>
+            <button class="button type1" onclick="changeDomain('就业')">就业</button>
+        </a>
+        <a>
+            <button class="button type1" onclick="changeDomain('企业')">企业</button>
+        </a>
+        <a>
+            <button class="button type1" onclick="changeDomain('交通')">交通</button>
+        </a>
+            <a href="/domain.html">
+            <button class="button type1">返回</button>
+        </a>
+    </div>
+    <!--左-->
+    <div class="main-left">
+        <div class="border-container">
+            <div class="no">
+                <div class="name-title">
+                    领域各区留言话题度排名
+                </div>
+                <div id="new_build" style="height: 660px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1683785593282"><div style="position: relative; overflow: hidden; width: 34px; height: 660px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="34" height="660" style="position: absolute; left: 0px; top: 0px; width: 34px; height: 660px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas><canvas data-zr-dom-id="zr_1" width="34" height="660" style="position: absolute; left: 0px; top: 0px; width: 34px; height: 660px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+                <span class="top-left border-span"></span>
+                <span class="top-right border-span"></span>
+                <span class="bottom-left border-span"></span>
+                <span class="bottom-right border-span"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-middle">
+        <div class="border-container">
+            <div class="no">
+                <div class="name-title" id="bt">
+                    数据总览
+                </div>
+                <div class="no-hd" style="margin-top: 10px">
+                    <ul>
+                        <li class="scrollnum" id="domainNum1" style="color: #087ee5">加载中</li>
+                        <li class="scrollnum" id="domainNum2" style="color: #087ee5">加载中</li>
+                    </ul>
+                </div>
+                <div class="no-bd" style="margin-top:10px;margin-bottom:10px;">
+                    <ul>
+                        <li>回复量</li>
+                        <li>留言量</li>
+                    </ul>
+                </div>
+                <span class="top-left border-span"></span>
+                <span class="top-right border-span"></span>
+                <span class="bottom-left border-span"></span>
+                <span class="bottom-right border-span"></span>
+            </div>
+        </div>
+
+        <div class="border-container">
+            <div class="no">
+                <div class="name-title">
+<!--                    建设工程竣工档案验收-->
+                    每日留言回复数据
+                </div>
+                <div id="complete" style="height: 200px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;" _echarts_instance_="ec_1683785593283"><div style="position: relative; overflow: hidden; width: 86px; height: 200px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="86" height="200" style="position: absolute; left: 0px; top: 0px; width: 86px; height: 200px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+                <span class="top-left border-span"></span>
+                <span class="top-right border-span"></span>
+                <span class="bottom-left border-span"></span>
+                <span class="bottom-right border-span"></span>
+            </div>
+        </div>
+
+        <div class="border-container">
+            <div class="no" style="font-size: 0">
+                <div class="name-title">
+                    领域词云图
+                </div>
+                <img id="msgcld" style="height: 100%;width: 50%;display: inline-block" src="/static/assets/img/wordcloud/msg/all.png">
+                <img id="rplcld" style="height: 100%;width: 50%;display: inline-block" src="/static/assets/img/wordcloud/rpl/all.png">
+                <span class="top-left border-span"></span>
+                <span class="top-right border-span"></span>
+                <span class="bottom-left border-span"></span>
+                <span class="bottom-right border-span"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="main-right">
+        <div class="border-container" style="height: 725px">
+            <div class="no" style="height: 705px">
+                <div class="name-title">
+                    各回复组织回复量排名
+                </div>
+                <div class="title-nav">
+                    <div class="top5-ul">
+                        <ul>
+                            <div id="orgcontainer" style="height: 700px; color: #000000; margin-left: -5px">
+
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+                <span class="top-left border-span"></span>
+                <span class="top-right border-span"></span>
+                <span class="bottom-left border-span"></span>
+                <span class="bottom-right border-span"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+<script type="text/javascript">
+    var liElements = document.querySelectorAll('.topbnt_left li,.topbnt_right li, .modal li');
+liElements.forEach(function(liElement) {
+    liElement.addEventListener('mouseover', function() {
+        this.classList.add('active');
+    });
+    liElement.addEventListener('mouseout', function() {
+        this.classList.remove('active');
+    });
+});
+</script>
+<script type="text/javascript">
+    function numInit() {
+    $('.scrollnum').each(function(){
+      $(this).prop('Counter',0).animate({
+        Counter: $(this).text()
+      },{
+        duration: 500,
+        easing: 'swing',
+        step: function (now){
+          $(this).text(now.toFixed(0));
+        }
+      });
+    });}
+    function changeObj(mark){
+  filter_data=all_data.filter(function (e){return e.object===mark;})
+        rpl_data=filter_data.filter(function (e){return e.state==='已办理';}).sort(sortrplTime)
+  initData()
+
+}
+function initData(){
+
+      ing_data=filter_data.filter(function (e){return e.state==='办理中';})
+      un_data=filter_data.filter(function (e){return e.state==='待回复';}).sort(sortTime)
+      // 获取要显示数据的元素
+        document.getElementById('Num1').textContent = filter_data.length;
+        document.getElementById('Num2').textContent = rpl_data.length;
+        document.getElementById('Num3').textContent = un_data.length;
+        document.getElementById('Num4').textContent = ing_data.length;
+        document.getElementById('Num5').textContent = (rpl_data.length*100/filter_data.length).toFixed(2);
+        document.getElementById('Num6').textContent = (((rpl_data.length*100/filter_data.length)-74.23)/0.7423).toString();
+    if((rpl_data.length*100/filter_data.length)-74.23>0){document.getElementById('icon5').src='/static/assets/img/iconup.png';}else {document.getElementById('icon5').src='/static/assets/img/icondown.png';}
+
+  numInit()}
+    function sortTime(a,b){
+    return b.msgtime-a.msgtime;
+}
+function sortrplTime(a,b){
+    return b.rpltime-a.rpltime;
+}
+    $.ajaxSetup({async :false });
+$.ajax({
+  type:"GET",
+  url:'/get_all/',
+  dataType:'json',
+  success:function (data){
+    all_data=JSON.parse(data)
+      filter_data=all_data.sort(sortTime)
+      rpl_data=filter_data.filter(function (e){return e.state==='已办理';}).sort(sortrplTime)
+      {#initData()#}
+  }
+});
+</script>
+<script src="/static/assets/js/build.js"></script>
+<script type="text/javascript">
+    window.addEventListener('load', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const domain = urlParams.get('domain');
+    const city = urlParams.get('city');
+    const buttons = document.querySelectorAll('.type1');
+    const citySelect = document.querySelector('#city-select');
+    citySelect.value = city;
+    buttons.forEach(button => {
+            const domain = button.textContent;
+            button.setAttribute('onclick', `changeDomain('${domain}', '${city}')`);
+        });
+    changeDomain(domain,city);
+
+});
+</script>
+<script>
+    const citySelect = document.querySelector('#city-select');
+    const buttons = document.querySelectorAll('.type1');
+    citySelect.addEventListener('change', () => {
+        const city = citySelect.value;
+        const urlParams = new URLSearchParams(window.location.search);
+        const domainNow = urlParams.get('domain');
+
+        buttons.forEach(button => {
+            const domain = button.textContent;
+            button.setAttribute('onclick', `changeDomain('${domain}', '${city}')`);
+        });
+        changeDomain(domainNow,city)
+
+    });
+</script>
+<script>
+    const nameTitle = document.getElementById('bt');
+    const buttonss = document.querySelectorAll('.type1');
+
+    buttonss.forEach(button => {
+        button.addEventListener('click', () => {
+            const domain = button.textContent;
+            nameTitle.innerHTML = `<span style="color: blue;">${domain}</span>数据总览`;
+            // Update the URL parameter
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.search);
+    params.set('domain', domain);
+    url.search = params.toString();
+    window.history.replaceState({}, '', url.toString());
+    console.log(domain)
+        });
+    });
+    const urlParams = new URLSearchParams(window.location.search);
+    const domain = urlParams.get('domain');
+    if (domain) {
+        nameTitle.innerHTML = `<span style="color: blue;">${domain}</span>数据总览`;
+    }
+</script>
+</body>
+</html>
