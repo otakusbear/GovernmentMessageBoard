@@ -1,0 +1,612 @@
+<!doctype html>
+
+<meta charset="utf-8">
+<title>政务新媒体互动内容分析及摘要生成系统</title>
+<link href="/static/assets/css/style.css"  rel="stylesheet" type="text/css" media="all" />
+<link href="/static/assets/css/fq.css"  rel="stylesheet" type="text/css" media="all" />
+<script src="/static/assets/js/echarts.min.js" charset="utf-8"></script>
+<script src="/static/assets/js/jquery-3.2.0.min.js" charset="utf-8"></script>
+{#<script src="/static/assets/js/material-dashboard.js"></script>#}
+<style>
+    /* 设置下拉框的字体大小和颜色 */
+#city-select {
+  font-size: 18px;
+  color: #333;
+}
+
+/* 设置下拉框的边框和内边距 */
+#city-select {
+  border: 1px solid #999;
+  padding: 5px 10px;
+}
+
+/* 设置下拉框的背景颜色 */
+#city-select {
+  background-color: #fff;
+}
+
+/* 设置下拉框选项的字体大小和颜色 */
+#city-select option {
+  font-size: 16px;
+  color: #333;
+}
+</style>
+{#<script src="/static/assets/js/map.js"></script>#}
+<body>
+<div id="explain" class="modal" style="padding: 60px;z-index: 7">
+    <h2 class="modal-title">话语模式定义</h2>
+    <h3>回复话语模式</h3>
+    <span style="background: rgb(180,237,255);
+    color: #1984ff;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;">描述话语</span> 主要指对公众诉求进行事实层面、程式化的回应。<br>
+    <span style="background: rgb(255,199,187);
+    color: #ff3f66;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;">共情话语</span> 主要表达对公众的理解、关注和重视。<br>
+    <span style="background: rgb(172,253,224);
+    color: #0e9a69;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;">规则话语</span> 主要指政府根据具体法律法规或政策文件回应。<br>
+    <h3>留言话语模式</h3>
+    <span style="background: rgb(255,249,171);
+    color: #cca901;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;">弱者话语</span> 主要表达自身弱势困难处境。<br>
+    <span style="background: rgb(255,209,199);
+    color: #ff3f66;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;">抗争话语</span> 主要表达表达对规则的失望和不信任。<br>
+    <span style="background: rgb(176,255,228);
+    color: #048c5b;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;">社会影响</span> 主要陈述社会群体性利弊和影响。<br>
+    <span style="background: rgb(180,237,255);
+    color: #1984ff;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;">个人权益</span> 主要依据法律法规维护合法权益。<br>
+    <div class="button-container"><li onclick="document.getElementById('explain').style.display='none'">关闭</li></div>
+</div>
+<div id="myModal" class="modal" style="padding: 60px">
+    <h2 class="modal-title">详细内容</h2>
+{#    <!-- Modal content --><h2 id="headline"></h2>#}
+{#    <h3>留言内容</h3>#}
+{#    <span id="msg"></span>#}
+    <table>
+    <tr style="height: 40px">
+                    <td><span style="font-weight: bold">留言对象：</span><p id="obj" style="display: inline;"></p><br>
+                        <h3 id="headline" style="margin-right:14px;font-weight: 1000;display: inline"></h3><p id="type" style="background: rgba(119,158,193,.1);color: #6c7e97;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;"></p><p id="domain" style="background: #effdfa;
+    color: #467cc6;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;"></p><p id="state" style="background: rgba(214,49,63,.1);
+    color: #d6313f;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;"></p><p id="senti" style="background: rgba(214,167,49,0.1);
+    color: #d5732c;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;"></p><p id="msgmods" style="background: rgba(49,214,96,0.1);
+    color: #31d69c;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;" onclick="document.getElementById('explain').style.display='block'"></p><br><br>
+                    <span id="msgtime" style="color: #8c8c8c;margin-right: 14px"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="white-space: pre-wrap;"><span id="msg"></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><img style="float: left" src="/static/assets/img/head.png"><div style="display: inherit"><span id="rplorg" style="margin-left:8px;font-weight: bold;margin-right: 14px;"></span><p id="rtd" style="background: rgba(119,158,193,.1);color: #6c7e97;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;"></p><p id="rplatt" style="background: #effdfa;
+    color: #467cc6;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;"></p><p id="rplmod" style="background: rgba(214,49,63,.1);
+    color: #d6313f;display: inline;margin-right: 12px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-family: NotoSansSC-Regular;
+    padding: 2px 14px;
+    border-radius: 14px;" onclick="document.getElementById('explain').style.display='block'"></p><br><span id="rpltime" style="margin-left:8px;color: #8c8c8c;margin-right: 14px"></span><br><p id="rpl" style="margin-left:8px;"></p></div>
+
+
+                    </td>
+                </tr>
+
+</table>
+    <div id="ciyun" style="text-align: center;margin-top: 10px"></div>
+    <div class="button-container"><li onclick="document.getElementById('myModal').style.display='none'">关闭</li></div>
+</div>
+<div class="wpbox">
+<div class="bnt">
+  <div class="topbnt_left fl">
+   <ul><li style="margin: 0 10px;font-weight:bold;font-size:larger;padding: 2px 10px;width: fit-content;
+    background-size: 100% 100%;"><a href="/traffic.html">图表模式</a></li>
+      <li style="margin: 0 10px;font-weight:bold;font-size:larger;padding: 2px 10px;width: fit-content;
+    background-size: 100% 100%;" class="active"><a href="/table.html">表格模式</a></li>
+       <li style="margin: 0 10px;font-weight:bold;font-size:larger;padding: 2px 10px;width: fit-content;
+    background-size: 100% 100%;"><a href="/corpus/">语料库</a></li>
+   </ul>
+  </div>
+  <div style="position: relative; text-align: center;">
+    <h1 class="tith1 fl" style="white-space: nowrap; overflow: visible; position: absolute; left: 50%; transform: translateX(-50%);">
+        政务新媒体互动内容分析及摘要生成系统
+    </h1>
+</div>
+<div class=" fr topbnt_right">
+    <ul>
+<li style="margin: 0 10px;font-weight:bold;font-size:larger;padding: 2px 10px;width: fit-content;
+    background-size: 100% 100%;"><a href="/search/">民众留言查看</a></li>
+      <li style="margin: 0 10px;font-weight:bold;font-size:larger;padding: 2px 10px;width: fit-content;
+    background-size: 100% 100%;"><a href="/map.html">辖区数据查询</a></li>
+        <li style="margin: 0 10px;font-weight:bold;font-size:larger;padding: 2px 10px;width: fit-content;
+    background-size: 100% 100%;"><a href="/domain.html">民生数据分析</a></li>
+    </ul>
+  </div>
+</div>
+<!-- bnt end -->
+<div class="left1">
+    <div class="serviceForm">
+						<div class="seHeader">
+							<span>
+								<p class="p-1">数据轮播表</p>
+							</span>
+							<span>留言</span>
+						</div>
+						<div class="statusList" style="height: calc(100% - 64px);">
+							<ul class="seTable">
+								<li>时间</li>
+								<li>类型</li>
+								<li>领域</li>
+								<li>状态</li>
+							</ul>
+							<div id="orderItems" class="outlineBorder" style="height: calc(100% - 60px);">{% for i in range %}<ul class="rolling rolStyle" onclick="modalinit({{ i }},'msg');"><li id="mt{{ i }}"></li><li id="type{{ i }}"></li><li id="domain{{ i }}"></li><li id="state{{ i }}"></li></ul>{% endfor %}</div>
+						</div>
+					</div>
+
+    <!-- lefttoday_number end -->
+
+
+</div>
+<!--  left1 end -->
+
+      <div class="mrbox_topmidd" style="width: 59.4%;height: 100%">
+          <div class="amiddboxttop" style="height: 10%">
+<div class="lefttoday_number">
+      <div class="widget-inline-box text-center fl">
+        <p style="font-size: 15px">留言量</p>
+        <h3 class="ceeb1fd scrollnum" id="Num1">380191</h3>
+
+      </div>
+      <div class="widget-inline-box text-center fl">
+         <p style="font-size: 15px">已办理</p>
+        <h3 class="c24c9ff scrollnum" id="Num2">361385</h3>
+
+      </div>
+      <div class="widget-inline-box text-center fl">
+         <p style="font-size: 15px">未回复</p>
+        <h3 class="cffff00 scrollnum" id="Num3">5030</h3>
+
+      </div>
+      <div class="widget-inline-box text-center fl">
+         <p style="font-size: 15px">办理中</p>
+        <h3 class="c11e2dd scrollnum" id="Num4">13776</h3>
+
+      </div>
+    <div class="widget-inline-box text-center fl">
+        <p style="font-size: 15px">回复率</p>
+        <h3 class="ceeb1fd scrollnum" style="display: inline-block" id="Num5">95.05</h3>%
+
+      </div>
+    </div>
+          </div>
+          <div class="amiddboxttop" style="position: relative;height: 60%">
+              <h2 class="tith2 pt1" style="font-size: 30px;font-weight: bold;">留言数据地图</h2>
+              <label for="city-select" style="    padding-left: 30px;
+    font-size: x-large;">选择地区:</label>
+<select id="city-select" style="z-index: 5;position: absolute;border-radius: 5px">
+    <option value="wuhan">武汉</option>
+  <option value="changsha">长沙</option>
+  <option value="zhengzhou">郑州</option>
+  <option value="nanchang">南昌</option>
+</select>
+              <div class="map1" style="display: flex;justify-content: center;align-items: center;"><img src="/static/assets/img/lbx.png"></div>
+                    <div class="map2" style="display: flex;justify-content: center;align-items: center;"><img src="/static/assets/img/jt.png"></div>
+                    <div class="map3" style="display: flex;justify-content: center;align-items: center;"><img src="/static/assets/img/map.png"></div>
+                <div class="hot_map" id="container" style="height: 90%"></div>
+
+                </div>
+          <div class="amidd_bott" style="height: 22%">
+                  <div class="amiddboxtbott1 fl" style="text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;width: 100%" >
+                      <h2 class="tith2 " style="font-size: 15px;position: relative;top: -50%">各区政务互动平台</h2>
+                      <div style="height:15%;width:60%;z-index: 5;position: absolute"><a class="weibo" title="政务微博" target="_blank" onclick='{{ org.0.weibo }}' href='{{ org.0.weibo }}'><img onclick='{{ org.0.weibo }}' src="/static/assets/img/weibo.png" width="16%" height:auto></a><a class="web" title="政府官网" target="_blank" href='{{ org.0.web }}'><img src="/static/assets/img/web.png" width="16%" height:auto></a><a title="市长信箱" class="mail" target="_blank" href='{{ org.0.mail }}'><img src="/static/assets/img/mail.png" width="16%" height:auto></a><a class="citybd" title="政府留言板" target="_blank" href='{{ org.0.citybd }}'><img src="/static/assets/img/citybd.png" width="16%" height:auto></a><a title="人民网留言板" class="rmwbd" target="_blank" href='{{ org.0.rmwbd }}'><img src="/static/assets/img/rmwbd.png" width="16%" height:auto></a></p>
+</div>                  </div>
+            </div>
+            </div>
+            <!--  amiddboxttop end-->
+
+            <!-- amidd_bott end -->
+
+        <!-- mrbox_top end -->
+
+        <!-- mrbox_top_right end -->
+
+<div class="right1">
+          <div class="serviceForm">
+						<div class="seHeader">
+							<span>
+								<p class="p-1">数据轮播表</p>
+
+							</span>
+							<span>回复</span>
+						</div>
+						<div class="statusList" style="height: calc(100% - 64px);">
+							<ul class="seTable">
+								<li>时间</li>
+
+								<li>回复组织</li>
+
+							</ul>
+							<div id="orderItems2" class="outlineBorder" style="height: calc(100% - 60px);">{% for i in range %}<ul class="rolling rolStyle" onclick="modalinit({{ i }},'rpl');"><li id="rt{{ i }}"></li><li id="org{{ i }}"></li></ul>{% endfor %}</div>
+						</div>
+					</div>
+        </div>
+          </div>
+    </div>
+</div>
+<script src="/static/assets/js/d3.v5.min.js"></script>
+<script src="/static/assets/js/d3-cloud.js"></script>
+<script type="text/javascript">
+       function sortTime(a,b){
+    return b.msgtime-a.msgtime;
+}
+function sortrplTime(a,b){
+    return b.rpltime-a.rpltime;
+}
+function getData(city) {
+    $.ajaxSetup({async: false});
+    $.ajax({
+        type: "GET",
+        url: '/get_new/?city=' + city,
+        dataType: 'json',
+        success: function (data) {
+            new_data = JSON.parse(data)
+            new_data = new_data.sort(sortTime)
+            rpl_new = new_data.filter(function (e) {
+                return e.state === '已办理';
+            }).sort(sortrplTime)
+
+            for (i = 0; i < 30; i++) {
+                switch (new_data[i].reply_time_diff) {
+                    case -1:
+                        replyTimeText = '15天后';
+                        break;
+                    case 0:
+                        replyTimeText = '7-15天';
+                        break;
+                    case 1:
+                        replyTimeText = '7天内';
+                        break;
+                }
+                document.getElementById('mt' + i.toString()).innerHTML = new Date(new_data[i].msgtime).toLocaleDateString('zh-CN', {year: 'numeric', month: 'long', day: 'numeric'}) + new Date(new_data[i].msgtime).toLocaleTimeString('zh-CN');
+                document.getElementById('type' + i.toString()).innerHTML = new_data[i].type;
+                document.getElementById('domain' + i.toString()).innerHTML = new_data[i].domain;
+                document.getElementById('org' + i.toString()).innerHTML = rpl_new[i].rplorg;
+                document.getElementById('state' + i.toString()).innerHTML = new_data[i].state;
+                document.getElementById('rt' + i.toString()).innerHTML = new Date(rpl_new[i].rpltime).toLocaleDateString('zh-CN', {year: 'numeric', month: 'long', day: 'numeric'}) + new Date(rpl_new[i].rpltime).toLocaleTimeString('zh-CN');
+            }
+        }
+    });
+}
+        getData('武汉');
+          var orgs = {{ org|safe }};
+        var targetOrg = orgs.find(function (org){
+                return org.org==='武汉市市长';
+            });
+    // 获取所有的<a>标签元素
+  var links = document.querySelectorAll("a");
+
+  // 遍历所有的<a>标签元素
+  for (var i = 0; i < links.length; i++) {
+    var link = links[i];
+
+    // 根据类名来设置href和onclick属性
+    if (link.classList.contains("weibo")) {
+      link.href = targetOrg.weibo;
+      link.onclick = targetOrg.weibo;
+    } else if (link.classList.contains("web")) {
+      link.href = targetOrg.web;
+    } else if (link.classList.contains("mail")) {
+      link.href = targetOrg.mail;
+    } else if (link.classList.contains("citybd")) {
+      link.href = targetOrg.citybd;
+    } else if (link.classList.contains("rmwbd")) {
+      link.href = targetOrg.rmwbd;
+    }
+  }
+
+</script>
+<script type="text/javascript">
+    var liElements = document.querySelectorAll('.topbnt_left li,.topbnt_right li, .modal li');
+liElements.forEach(function(liElement) {
+    liElement.addEventListener('mouseover', function() {
+        this.classList.add('active');
+    });
+    liElement.addEventListener('mouseout', function() {
+        this.classList.remove('active');
+    });
+});
+</script>
+<script type="text/javascript">
+    function ciyun(str){
+        var words = str.split(" ").map(function(word) {
+    return {text: word, size: 15 + Math.random() * 10};
+});
+
+var width = 300;
+var height = 100;
+
+var layout = d3.layout.cloud()
+    .size([width, height])
+    .words(words)
+    .padding(5)
+    .rotate(function() { return ~~(Math.random() * 2) * 90; })
+    .font("Impact")
+    .fontSize(function(d) { return d.size; })
+    .on("end", draw);
+
+layout.start();
+
+function draw(words) {
+    var canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, width, height);
+
+    var color = d3.scaleOrdinal(d3.schemeCategory10);
+
+    words.forEach(function(word) {
+        ctx.save();
+        ctx.translate(word.x + width / 2, word.y + height / 2);
+        ctx.rotate(word.rotate * Math.PI / 180);
+        ctx.textAlign = "center";
+        ctx.fillStyle = color(word.text);
+        ctx.font = word.size + "px " + word.font;
+        ctx.fillText(word.text, 0, 0);
+        ctx.restore();
+    });
+
+    var img = document.createElement("img");
+    img.src = canvas.toDataURL();
+
+    var ciyunDiv = document.getElementById("ciyun");
+    ciyunDiv.innerHTML = ""; // 清空div中的内容
+    ciyunDiv.appendChild(img);
+}
+    }
+</script>
+<script type="text/javascript">
+    function modalinit(num,flag){
+        var replyTimeText;
+
+        if(flag=='msg'){
+            switch (new_data[num].reply_time_diff) {
+    case -1: replyTimeText = '15天后';break;
+    case 0: replyTimeText = '7-15天';break;
+    case 1: replyTimeText = '7天内';break;
+}
+        document.getElementById('headline').innerHTML=new_data[num].title;
+        document.getElementById('msg').innerHTML=new_data[num].msgcontent;
+        document.getElementById('rpl').innerHTML=new_data[num].rplcontent;
+        document.getElementById('obj').innerHTML=new_data[num].object;
+        document.getElementById('type').innerHTML=new_data[num].type;
+        document.getElementById('domain').innerHTML=new_data[num].domain;
+        document.getElementById('state').innerHTML=new_data[num].state;
+        document.getElementById('senti').innerHTML=new_data[num].senti;
+        document.getElementById('msgmods').innerHTML=new_data[num].msg_mods;
+        document.getElementById('msgtime').innerHTML=new Date(new_data[num].msgtime).toLocaleDateString('zh-CN',{year: 'numeric', month: 'long', day: 'numeric'})+new Date(new_data[num].msgtime).toLocaleTimeString('zh-CN')
+        document.getElementById('rplorg').innerHTML=new_data[num].rplorg;
+        document.getElementById('rtd').innerHTML=replyTimeText;
+        document.getElementById('rplatt').innerHTML=new_data[num].rpl_atts;
+        document.getElementById('rplmod').innerHTML=new_data[num].rpl_mods;
+        document.getElementById('rpltime').innerHTML=new Date(new_data[num].rpltime).toLocaleDateString('zh-CN',{year: 'numeric', month: 'long', day: 'numeric'})+new Date(new_data[num].rpltime).toLocaleTimeString('zh-CN');
+        ciyun(new_data[num].key);
+        }
+        else {
+            switch (rpl_new[num].reply_time_diff) {
+    case -1: replyTimeText = '15天后';break;
+    case 0: replyTimeText = '7-15天';break;
+    case 1: replyTimeText = '7天内';break;
+}
+        document.getElementById('headline').innerHTML=rpl_new[num].title;
+        document.getElementById('msg').innerHTML=rpl_new[num].msgcontent;
+        document.getElementById('rpl').innerHTML=rpl_new[num].rplcontent;
+        document.getElementById('obj').innerHTML=rpl_new[num].object;
+        document.getElementById('type').innerHTML=rpl_new[num].type;
+        document.getElementById('domain').innerHTML=rpl_new[num].domain;
+        document.getElementById('state').innerHTML=rpl_new[num].state;
+        document.getElementById('senti').innerHTML=rpl_new[num].senti;
+        document.getElementById('msgmods').innerHTML=rpl_new[num].msg_mods;
+        document.getElementById('msgtime').innerHTML=new Date(rpl_new[num].msgtime).toLocaleDateString('zh-CN',{year: 'numeric', month: 'long', day: 'numeric'})+new Date(rpl_new[num].msgtime).toLocaleTimeString('zh-CN')
+        document.getElementById('rplorg').innerHTML=rpl_new[num].rplorg;
+        document.getElementById('rtd').innerHTML=replyTimeText;
+        document.getElementById('rplatt').innerHTML=rpl_new[num].rpl_atts;
+        document.getElementById('rplmod').innerHTML=rpl_new[num].rpl_mods;
+        document.getElementById('rpltime').innerHTML=new Date(rpl_new[num].rpltime).toLocaleDateString('zh-CN',{year: 'numeric', month: 'long', day: 'numeric'})+new Date(rpl_new[num].rpltime).toLocaleTimeString('zh-CN');
+        ciyun(rpl_new[num].key);
+        }
+        document.getElementById('myModal').style.display='block';
+    }
+
+</script>
+<script type="text/javascript">
+    function numInit() {
+    $('.scrollnum').each(function(){
+      $(this).prop('Counter',0).animate({
+        Counter: $(this).text()
+      },{
+        duration: 500,
+        easing: 'swing',
+        step: function (now){
+          $(this).text(now.toFixed(0));
+        }
+      });
+    });}
+    function changeObj(mark){
+  filter_data=all_data.filter(function (e){return e.object===mark;})
+  initData()
+        var orgs = {{ org|safe }};
+        var targetOrg = orgs.find(function (org){
+                return org.org===mark;
+            });
+    // 获取所有的<a>标签元素
+  var links = document.querySelectorAll("a");
+
+  // 遍历所有的<a>标签元素
+  for (var i = 0; i < links.length; i++) {
+    var link = links[i];
+
+    // 根据类名来设置href和onclick属性
+    if (link.classList.contains("weibo")) {
+      link.href = targetOrg.weibo;
+      link.onclick = targetOrg.weibo;
+    } else if (link.classList.contains("web")) {
+      link.href = targetOrg.web;
+    } else if (link.classList.contains("mail")) {
+      link.href = targetOrg.mail;
+    } else if (link.classList.contains("citybd")) {
+      link.href = targetOrg.citybd;
+    } else if (link.classList.contains("rmwbd")) {
+      link.href = targetOrg.rmwbd;
+    }
+  }
+    }
+function initData(){
+rpl_data=filter_data.filter(function (e){return e.state==='已办理';}).sort(sortrplTime)
+      ing_data=filter_data.filter(function (e){return e.state==='办理中';})
+      un_data=filter_data.filter(function (e){return e.state==='待回复';}).sort(sortTime)
+      // 获取要显示数据的元素
+        document.getElementById('Num1').textContent = filter_data.length;
+        document.getElementById('Num2').textContent = rpl_data.length;
+        document.getElementById('Num3').textContent = un_data.length;
+        document.getElementById('Num4').textContent = ing_data.length;
+        document.getElementById('Num5').textContent = (rpl_data.length*100/filter_data.length).toFixed(2);
+
+  numInit()}
+
+$.ajax({
+    type: "GET",
+    url: '/get_all/',
+    dataType: 'json',
+    success: function (data) {
+        all_data = JSON.parse(data)
+        filter_data = all_data.sort(sortTime)
+    }
+});
+</script>
+<script src="/static/assets/js/map2.js"></script>
+<script type="text/javascript">
+    document.getElementById('city-select').addEventListener('change', function() {
+  // 获取选中的值
+  var selectedValue = this.value;
+  pinyin2hanzi={'wuhan':'武汉','changsha':'长沙','nanchang':'南昌','zhengzhou':'郑州'}
+    getData(pinyin2hanzi[selectedValue]);
+  // 根据选中的值更新地图
+
+citylinks=[{city: 'wuhan', weibo: 'https://weibo.com/u/2759348142',web:'http://www.wuhan.gov.cn/',mail:'https://wsxf.xinfang.gov.cn/mail/views/tsqqPage.html?id=b0a22ae765d74f94a0974907076e3330',citybd:'http://liuyan.cjn.cn/',rmwbd:'https://liuyan.people.com.cn/threads/list?checkStatus=0&fid=1170'},{city: 'changsha', weibo: 'https://weibo.com/changshafabu',web:'http://www.changsha.gov.cn/',mail:'http://www.changsha.gov.cn/hdjl/',citybd:'http://liuyan.people.com.cn/forum/list?province=29&city=247',rmwbd:'http://liuyan.people.com.cn/forum/list?province=29&city=247'},{city: 'zhengzhou', weibo: 'https://weibo.com/zzfb',web:'https://www.zhengzhou.gov.cn/department/index.jhtml',mail:'https://12345.zhengzhou.gov.cn/',citybd:'http://liuyan.people.com.cn/forum/list?province=27&city=219',rmwbd:'http://liuyan.people.com.cn/forum/list?province=27&city=219'},{city: 'nanchang', weibo: 'https://weibo.com/nanchangfabu',web:'http://www.nc.gov.cn/',mail:'http://www.nc.gov.cn/ncszf/hdjln/2021_hdjl.shtml',citybd:'http://liuyan.people.com.cn/forum/list?province=21&city=185',rmwbd:'http://liuyan.people.com.cn/forum/list?province=21&city=185'}]
+  var targetCity =citylinks.find(function (city){
+                return city.city===selectedValue;
+            });
+    // 获取所有的<a>标签元素
+  var links = document.querySelectorAll("a");
+
+  // 遍历所有的<a>标签元素
+  for (var i = 0; i < links.length; i++) {
+    var link = links[i];
+
+    // 根据类名来设置href和onclick属性
+    if (link.classList.contains("weibo")) {
+      link.href = targetCity.weibo;
+      link.onclick = targetCity.weibo;
+    } else if (link.classList.contains("web")) {
+      link.href = targetCity.web;
+    } else if (link.classList.contains("mail")) {
+      link.href = targetCity.mail;
+    } else if (link.classList.contains("citybd")) {
+      link.href = targetCity.citybd;
+    } else if (link.classList.contains("rmwbd")) {
+      link.href = targetCity.rmwbd;
+    }
+  }
+        updateMap(selectedValue)
+  myChart.setOption(mapOption, true);
+});
+
+</script>
+</body>
+</html>
